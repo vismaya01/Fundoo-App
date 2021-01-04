@@ -6,7 +6,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom'
 import Snackbar from '../snackBar/snackBar';
-import Service from '../sevices/userService';
+import Service from '../../sevices/userService';
 
 const service = new Service();
 
@@ -54,13 +54,31 @@ export default class registration extends React.Component {
     this.setState({
       [event.target.name]: event.target.value
     })
+    if (this.validate()) {
+      this.emptyField();
+    }
+  }
+
+  emptyField = () => {
+    this.setState({
+      firstNameFlag: false,
+      lastNameFlag: false,
+      emailFlag: false,
+      passwordFlag: false,
+      confirmFlag: false,
+      errorFirstName: '',
+      errorLastName: '',
+      errorEmail: '',
+      errorPassword: '',
+      errorConfirm: '',
+    })
   }
 
   validate = () => {
     let isValid = false
     if (this.state.firstName === '') {
       this.setState({
-        errorFirstName: 'FirstName is requied',
+        errorFirstName: 'First Name is requied',
         firstNameFlag: true
       })
       isValid = true;
@@ -68,7 +86,7 @@ export default class registration extends React.Component {
     else {
       if (!validNameRegex.test(this.state.firstName)) {
         this.setState({
-          errorFirstName: 'FirstName is invalid',
+          errorFirstName: 'First Name is invalid',
           firstNameFlag: true
         })
         isValid = true;
@@ -77,7 +95,7 @@ export default class registration extends React.Component {
 
     if (this.state.lastName === '') {
       this.setState({
-        errorLastName: 'LastName is requied',
+        errorLastName: 'Last Name is requied',
         lastNameFlag: true
       })
       isValid = true;
@@ -85,7 +103,7 @@ export default class registration extends React.Component {
     else {
       if (!validNameRegex.test(this.state.lastName)) {
         this.setState({
-          errorLastName: 'LastName is invalid',
+          errorLastName: 'Last Name is invalid',
           lastNameFlag: true
         })
         isValid = true;

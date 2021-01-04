@@ -2,7 +2,7 @@ import React from 'react'
 import './forgotPassword.css';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import Service from '../sevices/userService';
+import Service from '../../sevices/userService';
 import SnackBar from '../snackBar/snackBar';
 
 const service = new Service();
@@ -32,6 +32,16 @@ export default class forgotPassword extends React.Component {
   handleChange = (event) => {
     this.setState({
       [event.target.name]: event.target.value
+    })
+    if (this.validate()) {
+      this.emptyField();
+    }
+  }
+
+  emptyField = () => {
+    this.setState({
+      emailFlag: false,
+      errorEmail: '',
     })
   }
 

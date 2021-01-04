@@ -3,7 +3,7 @@ import './resetPassword.css';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox';
-import Service from '../sevices/userService';
+import Service from '../../sevices/userService';
 import SnackBar from '../snackBar/snackBar';
 
 const service = new Service();
@@ -32,6 +32,18 @@ export default class resetPassword extends React.Component {
   handleChange = (event) => {
     this.setState({
       [event.target.name]: event.target.value
+    })
+    if (this.validate()) {
+      this.emptyField();
+    }
+  }
+  
+  emptyField = () => {
+    this.setState({
+      passwordFlag: false,
+      errorPassword: '',
+      errorConfirm: '',
+      confirmFlag: false,
     })
   }
 

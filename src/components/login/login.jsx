@@ -4,7 +4,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox'
 import { Link } from 'react-router-dom'
-import Service from '../sevices/userService';
+import Service from '../../sevices/userService';
 import Snackbar from '../snackBar/snackBar';
 
 const service = new Service();
@@ -37,6 +37,9 @@ export default class login extends React.Component {
     this.setState({
       [event.target.name]: event.target.value
     })
+    if (this.validate()) {
+      this.emptyField();
+    }
   }
 
   validate() {
@@ -84,6 +87,15 @@ export default class login extends React.Component {
     return isValid;
   }
 
+  emptyField = () => {
+    this.setState({
+      emailFlag: false,
+      passwordFlag: false,
+      errorEmail: '',
+      errorPassword: '',
+    })
+  }
+
   emptyTextField = () => {
     this.setState({
       hidden: true,
@@ -100,18 +112,15 @@ export default class login extends React.Component {
 
   handleSubmit = () => {
     if (this.validate()) {
-      console.log('Login failed');
       this.setState({
         snackBarOpen: true, snackBarMsg: 'Login is failed'
       })
     }
     else {
-      console.log('Login successfull', this.state.email, this.state.password);
       let userData = {
         'email': this.state.email,
         'password': this.state.password,
       }
-      console.log(userData)
       this.emptyTextField();
       service.login(userData).then(data => {
         console.log(data);

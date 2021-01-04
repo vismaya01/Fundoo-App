@@ -34,18 +34,29 @@
     padding-top: 20px;
 }
 
+.row-content1 {
+    display: flex;
+    justify-content: space-between;
+}
+
 @media screen and (max-width: 600px) {
     .sign-content {
         margin: 0px;
         border: 0px;
         max-width: 100%;
     }
-} 
-
-.row-content1{
-    display: flex;
-    justify-content: space-between;
 }
+
+@media screen and (max-width: 400px) {
+    .row-content1 {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .row-content1 > div {
+        padding-bottom: 10px ;
+    }
+} 
 
 @media screen and (max-width: 300px) {
     .button-Content1 {
@@ -55,15 +66,5 @@
 
     .button-Content1 > div {
         padding-bottom:20px;
-    }
-
-    .row-content1 {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .row-content1 > div {
-        padding-bottom: 10px ;
-    }
-    
+    }    
 }
