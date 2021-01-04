@@ -1,0 +1,167 @@
+.content {
+    display: flex;
+    flex-direction: row;
+    border: 1px solid #dadce0;
+    border-radius: 8px;
+    margin: 30px auto;
+    width: 750px;
+    box-sizing: border-box;
+    flex-grow: 1;
+    padding: 40px 40px 36px;
+}
+
+.form { 
+    display: flex;
+    flex-direction: column;
+    padding: 0px 0px 0px 48px;
+    margin: 0 -48px;
+    overflow: hidden;
+   
+}
+
+.form-head {
+    color: #202124; 
+    display: flex;
+    flex-direction:column;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 1.3333;
+}
+
+.form-head > div {
+    padding-bottom: 10px;
+}
+
+.form-main {
+    font-size: 14px;
+    padding: 24px 0 0;
+    vertical-align: top;
+    white-space: normal;
+    max-width: 100%;
+}
+
+.row-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.logo-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-left: 48px;
+    width: 300px;
+    
+}
+
+.Text {
+    margin-left: 10px;
+    color:#5f6368;
+}
+
+.logo-content > img {
+    width: 244px;
+    height: 244px;
+    padding-left: 19px;
+}
+
+.mr {
+    margin-right: 12px !important;
+}
+
+.button-Content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-top: 40px;
+}
+
+.error {
+    color:#db2269;
+    font-size: 0.625em;
+    display: relative;
+    display: flex;
+    justify-content: space-between;
+  }
+
+.c1 { 
+    color: blue;
+}
+
+.c2 {
+    color: red;
+}
+
+.c3 {
+ color: yellow;
+}
+
+.c4 {
+    color: blue;
+}
+
+.c5 { 
+  color: green;
+}
+
+.c6 {
+  color: #ff0000;
+}
+
+@media screen and (max-width: 300px) {
+    .button-Content {
+        flex-direction: column-reverse;
+        align-items: center;
+    }
+
+    .button-Content > div {
+        padding-bottom:20px;
+    }
+}
+
+@media screen and (max-width: 401px) {
+    .content {
+        padding: 24px 24px 36px;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .form-main {
+        border-width: 0 24px;
+    }
+
+    .form-head > div {
+        padding-top: 20px;
+    }
+} 
+
+@media screen and (max-width:900px){
+    .logo-content {
+        width: 0px;
+        height: 0px;
+    }
+    .logo-content > img {
+        width: 0px;
+        height: 0px;
+    }
+}
+
+@media screen and (max-width:750px) { 
+    .row-content {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .content {
+        border:0px;
+        max-width: 100%;
+        justify-content: center;
+    }
+
+    .mr {
+        margin-right:0px !important ;
+    }
+
+}
