@@ -171,6 +171,12 @@
     margin-right: 1%;
 }
 
+.display-note {
+    display: flex;
+    flex-flow:wrap ;
+    margin-left: 10px;
+}
+
 @media screen and (max-width: 800px) {
     .search {
         background: none;
@@ -218,6 +224,10 @@
 
     .row-head3 {
         width: 100px;
+    }
+
+    .display-note {
+        flex-direction: column;
     }
 }
 

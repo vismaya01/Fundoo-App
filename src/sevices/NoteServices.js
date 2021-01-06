@@ -12,4 +12,13 @@ export default class NoteService {
           }
     });
   }
+
+  getNoteList = (token) => {
+    return httpService.Get(`${this.baseUrl}/notes/getNotesList`,{
+        headers: {
+            Authorization: `${token}`,
+          }
+    });
+  }
+
 }

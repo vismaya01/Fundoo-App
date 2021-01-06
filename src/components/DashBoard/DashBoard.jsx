@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './DashBoard.css';
 import logo from '../assets/logo.png'
 import Drawer from '@material-ui/core/Drawer';
@@ -31,6 +31,9 @@ import {
   Button
 } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
+import Service from '../../sevices/NoteServices'
+
+const services = new Service()
 
 
 const drawerWidth = 240;
@@ -63,6 +66,8 @@ export default function DashBoard() {
   const [color, setColor] = useState(false);
   const [keyValue, setKeyValue] = useState(false);
   const [hide, setHide] = useState(false)
+  const [showCard, setShowCard] = useState("take_note");
+  const [noteList, setNoteList] = useState([]);
   let userData = JSON.parse(localStorage.getItem("userData"))
   let history = useHistory();
   let userEmail = ''
@@ -76,6 +81,17 @@ export default function DashBoard() {
       (userLastName = item.lastName)
     ))
   }
+
+  useEffect(() => {
+    services.getNoteList(localStorage.getItem("userToken"))
+      .then((res) => {
+        setNoteList(res.data.data.data);
+      })
+      .catch((err) => {
+        console.log( err);
+      });
+  });
+
 
   const handleLogout = () => {
     localStorage.clear();
@@ -212,7 +228,11 @@ export default function DashBoard() {
       </Drawer>
       <div className="main">
         <NewNote />
-        <DisplayNote />
+        <div className="display-note">
+          {noteList.map((note) => (           
+            <DisplayNote item={note} />
+          ))}
+        </div>
       </div>
     </div>
   </div>
