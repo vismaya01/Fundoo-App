@@ -7,12 +7,15 @@ import CheckBoxOutlinedIcon from '@material-ui/icons/CheckBoxOutlined';
 import BrushIcon from '@material-ui/icons/Brush';
 import ImageOutlinedIcon from '@material-ui/icons/ImageOutlined';
 import InputBase from '@material-ui/core/InputBase';
-import Button from '@material-ui/core/Button'
+import Button from '@material-ui/core/Button';
 import AddAlertOutlinedIcon from '@material-ui/icons/AddAlertOutlined';
 import PersonAddOutlinedIcon from '@material-ui/icons/PersonAddOutlined';
 import ColorLensOutlinedIcon from '@material-ui/icons/ColorLensOutlined';
 import ArchiveOutlinedIcon from '@material-ui/icons/ArchiveOutlined';
 import MoreVertOutlinedIcon from '@material-ui/icons/MoreVertOutlined';
+import Service from '../../sevices/NoteServices'
+
+const services = new Service()
 
 export default function NewNote() {
     const [open, setOpen] = useState(true);
@@ -20,6 +23,8 @@ export default function NewNote() {
     const [color, setColor] = useState(false)
     const [bgColor, setBgColor] = useState('')
     const [showColorList, setShowColorList] = useState(false);
+    const [title, setTitle] = useState('');
+    const [description, setDescription] = useState('');
 
     const DATA = [
         { title: "Default", id: "#fff" },
@@ -60,6 +65,20 @@ export default function NewNote() {
         setColor(false)
     }
 
+    const saveNote = () => {
+        if (title !== '') {
+            let formData = new FormData();
+            formData.set("title", title);
+            formData.set("description", description);
+            formData.set("color", bgColor);
+            services.saveNotes(formData, localStorage.getItem("userToken")).then(res => {
+                console.log(res)
+            }).catch((err) => {
+                    console.log( err);
+                });
+        }
+    };
+
     return (<div className="notes">
         {open ?
             <div className="contain container" >
@@ -68,16 +87,17 @@ export default function NewNote() {
                 <IconButton> <BrushIcon /></IconButton>
                 <IconButton> <ImageOutlinedIcon /></IconButton>
             </div> :
-            <div className="contain container1" style={{backgroundColor: bgColor}}>
+            <div className="contain container1" style={{ backgroundColor: bgColor }}>
                 <div className="note1" >
                     <div className="title pd">
-                        <InputBase placeholder='Title' fullWidth />
+                        <InputBase placeholder='Title' fullWidth value={title} onChange={(e) => setTitle(e.target.value)} />
                         <IconButton onClick={handlePin}>
                             <img src={pin ? FilledPin : OutlinedPin} alt='pin' />
                         </IconButton>
                     </div>
                     <div className='note pd'>
-                        <InputBase placeholder='Take a note...' fullWidth />
+                        <InputBase placeholder='Take a note...' fullWidth value={description}
+                            onChange={(e) => setDescription(e.target.value)} />
                     </div>
                 </div>
                 <div className="toolbar">
@@ -98,7 +118,7 @@ export default function NewNote() {
                                 {DATA.map((item) => (
                                     <button onMouseOver={handleColor} onClick={() => selectColor(item.id)}
                                         className="button-color"
-                                        style={{ backgroundColor: item.id}}
+                                        style={{ backgroundColor: item.id }}
                                     ></button>
                                 ))}
                             </div>
@@ -114,11 +134,10 @@ export default function NewNote() {
                         </IconButton>
                     </div>
                     <div className="close-button">
-                        <Button size="small" onClick={handleClose}>Close</Button>
+                        <Button size="small" onClick={() => {saveNote(); handleClose()}}>Close</Button>
                     </div>
                 </div>
             </div>
-
         }
     </div>
     );

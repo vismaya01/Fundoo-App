@@ -29,7 +29,7 @@ import DisplayNote from '../DisplayNote/displayNote'
 import {
   Avatar,
   Button
-  } from "@material-ui/core";
+} from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 
 
@@ -71,9 +71,9 @@ export default function DashBoard() {
 
   if (userData !== null) {
     userData.map((item) => (
-      userEmail = item.email,
-      userFirstName = item.firstName,
-      userLastName = item.lastName
+      (userEmail = item.email),
+      (userFirstName = item.firstName),
+      (userLastName = item.lastName)
     ))
   }
 
@@ -155,19 +155,19 @@ export default function DashBoard() {
       </div>
       <div className={hide ? "true profile" : "false profile"} >
         <div className="person">
-              <div className="avatarContainer">
-                  <Avatar className="avatarIcon" alt='profile' />
-              </div>
-              <div className='name' style={{ fontSize: 20 }}>
-                {userFirstName} {userLastName}
-              </div>
-              <div className='name' style={{ fontSize: 15 }}>
-                {userEmail}
-              </div>
+          <div className="avatarContainer">
+            <Avatar className="avatarIcon" alt='profile' />
+          </div>
+          <div className='name' style={{ fontSize: 20 }}>
+            {userFirstName} {userLastName}
+          </div>
+          <div className='name' style={{ fontSize: 15 }}>
+            {userEmail}
+          </div>
         </div>
         <div className="cardActions">
-              <Button variant="contained" onClick={handleLogout}>Logout</Button>
-            </div>
+          <Button variant="contained" onClick={handleLogout}>Logout</Button>
+        </div>
       </div>
     </div>
     <div className="main-content" onClick={handleUnHideAccount}>

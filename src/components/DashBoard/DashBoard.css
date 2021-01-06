@@ -16,7 +16,7 @@
     padding: 4px;
     border:1px solid #dadce0;
     border-width: 0 0 1px 0;
-    /* position: relative; */
+    position: relative;
 }
 
 .row-head1 {
@@ -219,19 +219,11 @@
     .row-head3 {
         width: 100px;
     }
-
-    .main-content {
-        margin-top: 65px;
-    } 
 }
 
 @media screen and (max-width: 500px) {
     .MuiIconButton-root {
         padding: 10px !important;
-    }
-
-    .profile {
-        width: 300px;
     }
 } 
 
@@ -239,6 +231,5 @@
     .header-content {
         padding: 4px 8px;
         height: 58px;
-        position: fixed;
     }
 }
