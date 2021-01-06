@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './DashBoard.css';
 import logo from '../assets/logo.png'
 import Drawer from '@material-ui/core/Drawer';
-import { makeStyles, StylesProvider } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
@@ -17,13 +17,14 @@ import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import ArchiveOutlinedIcon from '@material-ui/icons/ArchiveOutlined';
 import Delete from '@material-ui/icons/Delete';
 import SearchIcon from '@material-ui/icons/Search';
-import TextField from '@material-ui/core/TextField';
+import InputBase from '@material-ui/core/InputBase';
 import ClearIcon from '@material-ui/icons/Clear';
 import Refresh from '@material-ui/icons/Refresh'
 import AppIcon from '@material-ui/icons/Apps';
 import ListIcon from '@material-ui/icons/List';
 import SettingsIcon from '@material-ui/icons/Settings';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import NewNote from '../NewNote/NewNote'
 
 const drawerWidth = 240;
 
@@ -88,11 +89,7 @@ export default function DashBoard() {
           <IconButton
             onClick={open ? handleDrawerClose : handleDrawerOpen}
             aria-label="open drawer"
-            edge="start"
-            className={clsx({
-              [classes.hide]: open,
-            })}
-          >
+            edge="start">
             <MenuIcon />
           </IconButton>
         </Toolbar>
@@ -105,9 +102,7 @@ export default function DashBoard() {
             <SearchIcon />
           </IconButton>
           <div className="input">
-            <StylesProvider injectFirst>
-              <TextField placeholder="Search" fullWidth variant='outlined' />
-            </StylesProvider>
+              <InputBase placeholder="Search" fullWidth />
           </div>
           <IconButton className='clear-icon'>
             <ClearIcon />
@@ -117,7 +112,7 @@ export default function DashBoard() {
           <IconButton>
             <Refresh />
           </IconButton>
-          <IconButton onClick={handleViewOpen} >
+          <IconButton className='App-icon' onClick={handleViewOpen} >
             {view ? <AppIcon /> : <ListIcon />}
           </IconButton>
           <IconButton>
@@ -140,7 +135,6 @@ export default function DashBoard() {
       </div>
     </div>
     <div className="main-content" onClick={handleUnHideAccount}>
-      <div className="column-content">
         <Drawer variant="permanent"
           className={clsx({
             [classes.drawerOpen]: open,
@@ -180,10 +174,12 @@ export default function DashBoard() {
             </ListItem>
           </List>
         </Drawer>
-      </div>
       <div className="main">
-
-      </div>
+        <NewNote/>
+        <div className="display">
+        
+        </div>
+      </div>  
     </div>
   </div>
   );
