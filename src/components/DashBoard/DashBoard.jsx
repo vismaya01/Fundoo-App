@@ -25,6 +25,13 @@ import ListIcon from '@material-ui/icons/List';
 import SettingsIcon from '@material-ui/icons/Settings';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import NewNote from '../NewNote/NewNote'
+import DisplayNote from '../DisplayNote/displayNote'
+import {
+  Avatar,
+  Button
+  } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
+
 
 const drawerWidth = 240;
 
@@ -56,6 +63,24 @@ export default function DashBoard() {
   const [color, setColor] = useState(false);
   const [keyValue, setKeyValue] = useState(false);
   const [hide, setHide] = useState(false)
+  let userData = JSON.parse(localStorage.getItem("userData"))
+  let history = useHistory();
+  let userEmail = ''
+  let userFirstName = ''
+  let userLastName = ''
+
+  if (userData !== null) {
+    userData.map((item) => (
+      userEmail = item.email,
+      userFirstName = item.firstName,
+      userLastName = item.lastName
+    ))
+  }
+
+  const handleLogout = () => {
+    localStorage.clear();
+    history.push("/");
+  };
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -102,7 +127,7 @@ export default function DashBoard() {
             <SearchIcon />
           </IconButton>
           <div className="input">
-              <InputBase placeholder="Search" fullWidth />
+            <InputBase placeholder="Search" fullWidth />
           </div>
           <IconButton className='clear-icon'>
             <ClearIcon />
@@ -130,56 +155,65 @@ export default function DashBoard() {
       </div>
       <div className={hide ? "true profile" : "false profile"} >
         <div className="person">
-
+              <div className="avatarContainer">
+                  <Avatar className="avatarIcon" alt='profile' />
+              </div>
+              <div className='name' style={{ fontSize: 20 }}>
+                {userFirstName} {userLastName}
+              </div>
+              <div className='name' style={{ fontSize: 15 }}>
+                {userEmail}
+              </div>
         </div>
+        <div className="cardActions">
+              <Button variant="contained" onClick={handleLogout}>Logout</Button>
+            </div>
       </div>
     </div>
     <div className="main-content" onClick={handleUnHideAccount}>
-        <Drawer variant="permanent"
-          className={clsx({
+      <Drawer variant="permanent"
+        className={clsx({
+          [classes.drawerOpen]: open,
+          [classes.drawerClose]: !open,
+        })}
+        classes={{
+          paper: clsx({
             [classes.drawerOpen]: open,
             [classes.drawerClose]: !open,
-          })}
-          classes={{
-            paper: clsx({
-              [classes.drawerOpen]: open,
-              [classes.drawerClose]: !open,
-            }),
-          }}>
-          <List>
-            <ListItem button onClick={() => { handleClass('Notes'); handleDrawerOpen() }}
-              className={color && keyValue === 'Notes' ? 'pink' : 'white'} key='Notes'>
-              <ListItemIcon><EmojiObjectsOutlinedIcon /></ListItemIcon>
-              <ListItemText>Notes</ListItemText>
-            </ListItem>
-            <ListItem button onClick={() => { handleClass('Reminder'); handleDrawerOpen() }}
-              className={color && keyValue === 'Reminder' ? 'pink' : 'white'} key='Reminder'>
-              <ListItemIcon><NotificationsNoneOutlinedIcon /></ListItemIcon>
-              <ListItemText>Reminder</ListItemText>
-            </ListItem>
-            <ListItem button onClick={() => { handleClass('Edit'); handleDrawerOpen() }}
-              className={color && keyValue === 'Edit' ? 'pink' : 'white'} key='Edit'>
-              <ListItemIcon><EditOutlinedIcon /></ListItemIcon>
-              <ListItemText>Edit labels</ListItemText>
-            </ListItem>
-            <ListItem button onClick={() => { handleClass('Archive'); handleDrawerOpen() }}
-              className={color && keyValue === 'Archive' ? 'pink' : 'white'} key='Archive'>
-              <ListItemIcon><ArchiveOutlinedIcon /></ListItemIcon>
-              <ListItemText>Archive</ListItemText>
-            </ListItem>
-            <ListItem button onClick={() => { handleClass('Delete'); handleDrawerOpen() }}
-              className={color && keyValue === 'Delete' ? 'pink' : 'white'} key='Delete'>
-              <ListItemIcon><Delete /></ListItemIcon>
-              <ListItemText>Trash</ListItemText>
-            </ListItem>
-          </List>
-        </Drawer>
+          }),
+        }}>
+        <List>
+          <ListItem button onClick={() => { handleClass('Notes'); handleDrawerOpen() }}
+            className={color && keyValue === 'Notes' ? 'pink' : 'white'} key='Notes'>
+            <ListItemIcon><EmojiObjectsOutlinedIcon /></ListItemIcon>
+            <ListItemText>Notes</ListItemText>
+          </ListItem>
+          <ListItem button onClick={() => { handleClass('Reminder'); handleDrawerOpen() }}
+            className={color && keyValue === 'Reminder' ? 'pink' : 'white'} key='Reminder'>
+            <ListItemIcon><NotificationsNoneOutlinedIcon /></ListItemIcon>
+            <ListItemText>Reminder</ListItemText>
+          </ListItem>
+          <ListItem button onClick={() => { handleClass('Edit'); handleDrawerOpen() }}
+            className={color && keyValue === 'Edit' ? 'pink' : 'white'} key='Edit'>
+            <ListItemIcon><EditOutlinedIcon /></ListItemIcon>
+            <ListItemText>Edit labels</ListItemText>
+          </ListItem>
+          <ListItem button onClick={() => { handleClass('Archive'); handleDrawerOpen() }}
+            className={color && keyValue === 'Archive' ? 'pink' : 'white'} key='Archive'>
+            <ListItemIcon><ArchiveOutlinedIcon /></ListItemIcon>
+            <ListItemText>Archive</ListItemText>
+          </ListItem>
+          <ListItem button onClick={() => { handleClass('Delete'); handleDrawerOpen() }}
+            className={color && keyValue === 'Delete' ? 'pink' : 'white'} key='Delete'>
+            <ListItemIcon><Delete /></ListItemIcon>
+            <ListItemText>Trash</ListItemText>
+          </ListItem>
+        </List>
+      </Drawer>
       <div className="main">
-        <NewNote/>
-        <div className="display">
-        
-        </div>
-      </div>  
+        <NewNote />
+        <DisplayNote />
+      </div>
     </div>
   </div>
   );

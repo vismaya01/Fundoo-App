@@ -122,8 +122,15 @@ export default class login extends React.Component {
         'password': this.state.password,
       }
       this.emptyTextField();
-      service.login(userData).then(data => {
-        console.log(data);
+      service.login(userData).then(res => {
+        console.log(res);
+        let Data = []
+        Data[0] = res.data
+          let userToken = res.data.id;
+          let userId = res.data.userId;
+          localStorage.setItem("userToken", userToken);
+          localStorage.setItem("userId", userId);
+          localStorage.setItem("userData", JSON.stringify(Data))
         this.setState({
           snackBarOpen: true, snackBarMsg: 'Login is successfull'
         });

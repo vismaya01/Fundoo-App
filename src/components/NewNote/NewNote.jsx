@@ -94,10 +94,9 @@ export default function NewNote() {
                         </IconButton>
                         {showColorList ? (
                             <div className={color ? "visible color-change" : "NV color-change"}
-                                onMouseOver={handleColor} style={{ width: 150, height: 125 }}>
-                                {DATA.map((item, index) => (
+                                onMouseOver={handleColor} onMouseOut={handleColorOut} style={{ width: 150, height: 125 }}>
+                                {DATA.map((item) => (
                                     <button onMouseOver={handleColor} onClick={() => selectColor(item.id)}
-                                        key={index}
                                         className="button-color"
                                         style={{ backgroundColor: item.id}}
                                     ></button>

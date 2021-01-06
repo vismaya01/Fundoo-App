@@ -1,0 +1,12 @@
+.display {
+    height: 150px;
+    display: flex;
+}
+
+.addNote {
+    width: 240px;
+    margin: 16px;
+    border: 1px solid #dadce0;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
