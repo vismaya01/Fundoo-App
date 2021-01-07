@@ -1,0 +1,31 @@
+.tools {
+    flex-grow: 1;
+}
+
+.color-change {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 5px 7px 3px;
+    z-index: 4011;
+    box-sizing: border-box;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+    background-color: #fff; 
+}
+
+.NV {
+    display: none;
+} 
+
+.button-color {
+    margin: 3px;
+    width: 25px;
+    height: 25px;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.MuiIconButton-root {
+    padding: 9px !important;
+}

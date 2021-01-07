@@ -6,6 +6,7 @@ import Checkbox from '@material-ui/core/Checkbox'
 import { Link } from 'react-router-dom'
 import Service from '../../sevices/userService';
 import Snackbar from '../snackBar/snackBar';
+import auth from '../../auth';
 
 const service = new Service();
 
@@ -202,7 +203,9 @@ export default class login extends React.Component {
           <div className='button-Content1'>
             <Button component={Link} to="/registration" color="primary">create account</Button>
             <div>
-              <Button variant="contained" color="primary" onClick={this.handleSubmit}>Sign In</Button>
+              <Button variant="contained" color="primary" onClick={() => {
+                this.handleSubmit();
+                auth.login()}}>Sign In</Button>
               <Snackbar open={this.state.snackBarOpen} close={this.snackBarClose} message={this.state.snackBarMsg} />
             </div>
           </div>

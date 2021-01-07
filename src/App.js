@@ -1,12 +1,15 @@
-import './App.css';
+import './App.css'
+import React, { useState } from "react";
 import Registration from './components/registration/registration'
 import Login from './components/login/login';
 import Forgotpassword from './components/forgotPassword/forgotPassword'
 import Resetpassword from './components/resetPassword/resetPassword';
 import DashBoard from './components/DashBoard/DashBoard'
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { ProtectedRoute } from "./ProtectedRoute";
 
 function App() {
+
   return (
     <div className="App">
       <BrowserRouter>
@@ -15,7 +18,10 @@ function App() {
           <Route exact path="/" component={Login} />
           <Route exact path="/forgotpassword" component={Forgotpassword} />
           <Route exact path="/resetpassword/:token" component={Resetpassword} />
-          <Route exact path="/dashBoard" component={DashBoard} />
+          <ProtectedRoute exact path="/dashBoard" component={DashBoard} />
+          <Route path="*" >
+            <div>404 NOT FOUND</div>
+          </Route>
         </Switch>
       </BrowserRouter>
     </div>

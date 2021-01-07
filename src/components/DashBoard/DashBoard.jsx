@@ -22,6 +22,7 @@ import DisplayNote from '../DisplayNote/displayNote'
 import { Avatar, Toolbar, List, IconButton, Button, InputBase, ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import Service from '../../sevices/NoteServices'
+import auth from '../../auth'
 
 const services = new Service()
 
@@ -174,7 +175,9 @@ export default function DashBoard() {
           </div>
         </div>
         <div className="cardActions">
-          <Button variant="contained" onClick={handleLogout}>Logout</Button>
+          <Button variant="contained" onClick={() => {
+                  handleLogout();
+                  auth.logout()}}>Logout</Button>
         </div>
       </div>
     </div>
