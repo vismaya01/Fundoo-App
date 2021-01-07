@@ -1,31 +1,41 @@
 .display {
-    height: 160px;
     display: flex;
     width: 240px;
 }
 
 .addNote {
     width: 240px;
+    height: max-content;
     margin: 5px;
     border: 1px solid #dadce0;
     border-radius: 8px;
     box-sizing: border-box;
 }
 
+.notes1 {
+    height: max-content;
+}
+
+.pds {
+    letter-spacing: .00625em;
+    padding: 5px;
+    height: 24px;
+}
+
 .toolbar1 {
     display: flex;
-    justify-content: center;
+    padding-left: 10px ;
 }
 .toolbar1 > button {
-    padding: 7px;
+    padding: 6px;
 }
 
 @media screen and (max-width: 600px) {
     .display {
-        width:100%;
+        width:90%;
     }
 
     .addNote {
-        width: 100%;
+        width: 90%;
     }
 }

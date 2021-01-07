@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState} from 'react'
 import './NewNote.css';
 import FilledPin from '../assets/filledpin.svg'
 import OutlinedPin from '../assets/outlinedpin.svg'
@@ -17,11 +17,11 @@ import Service from '../../sevices/NoteServices'
 
 const services = new Service()
 
-export default function NewNote() {
+const NewNote = ({GetNote}) => {
     const [open, setOpen] = useState(true);
     const [pin, setPin] = useState(false)
     const [color, setColor] = useState(false)
-    const [bgColor, setBgColor] = useState('')
+    const [bgColor, setBgColor] = useState('#fff')
     const [showColorList, setShowColorList] = useState(false);
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
@@ -77,6 +77,7 @@ export default function NewNote() {
                     console.log( err);
                 });
         }
+        GetNote()
     };
 
     return (<div className="notes">
@@ -134,13 +135,14 @@ export default function NewNote() {
                         </IconButton>
                     </div>
                     <div className="close-button">
-                        <Button size="small" onClick={() => {saveNote(); handleClose()}}>Close</Button>
+                        <Button size="small" onClick={() => {saveNote(); handleClose();}}>Close</Button>
                     </div>
                 </div>
             </div>
         }
     </div>
     );
-
 }
+
+export default NewNote
 

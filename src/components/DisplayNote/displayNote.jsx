@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import './displayNote.css'
 import IconButton from '@material-ui/core/IconButton';
 import ImageOutlinedIcon from '@material-ui/icons/ImageOutlined';
@@ -9,29 +9,19 @@ import ArchiveOutlinedIcon from '@material-ui/icons/ArchiveOutlined';
 import MoreVertOutlinedIcon from '@material-ui/icons/MoreVertOutlined';
 
 const DisplayNote = (item) => {  
-    const [hide, setHide] = useState(false)
-
-    const handleHide = () => {
-        setHide(true)
-    }
-
-    const handleHiden = () => {
-        setHide(false)
-    }
 
     return (
         <div className="display">
             {item.item.title !== undefined ?
-                <div className="addNote" onMouseOver={handleHide} onMouseOut={handleHiden}>
-                    <div className="note1" >
-                        <div className="title pd">
+                <div className="addNote" style = {{ backgroundColor : item.item.color }}>
+                    <div className="notes1" >
+                        <div className="title pds">
                                 {item.item.title}
                         </div>
-                        <div className='note pd'>
+                        <div className='note pds'>
                                 {item.item.description}
                         </div>
                     </div>
-                    {hide ?
                         <div className="toolbar1">
                             <IconButton aria-label="Remind me" edge="start">
                                 <AddAlertOutlinedIcon fontSize="small" />
@@ -51,8 +41,7 @@ const DisplayNote = (item) => {
                             <IconButton aria-label="More">
                                 <MoreVertOutlinedIcon fontSize="small" />
                             </IconButton>
-                        </div> :
-                        null}
+                        </div> 
                 </div> :
                 null
             }

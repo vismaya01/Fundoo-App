@@ -4,20 +4,13 @@ import logo from '../assets/logo.png'
 import Drawer from '@material-ui/core/Drawer';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
-import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
-import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
 import EmojiObjectsOutlinedIcon from '@material-ui/icons/EmojiObjectsOutlined';
 import NotificationsNoneOutlinedIcon from '@material-ui/icons/NotificationsNoneOutlined';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import ArchiveOutlinedIcon from '@material-ui/icons/ArchiveOutlined';
 import Delete from '@material-ui/icons/Delete';
 import SearchIcon from '@material-ui/icons/Search';
-import InputBase from '@material-ui/core/InputBase';
 import ClearIcon from '@material-ui/icons/Clear';
 import Refresh from '@material-ui/icons/Refresh'
 import AppIcon from '@material-ui/icons/Apps';
@@ -26,10 +19,7 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import NewNote from '../NewNote/NewNote'
 import DisplayNote from '../DisplayNote/displayNote'
-import {
-  Avatar,
-  Button
-} from "@material-ui/core";
+import { Avatar, Toolbar, List, IconButton, Button, InputBase, ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import Service from '../../sevices/NoteServices'
 
@@ -66,7 +56,6 @@ export default function DashBoard() {
   const [color, setColor] = useState(false);
   const [keyValue, setKeyValue] = useState(false);
   const [hide, setHide] = useState(false)
-  const [showCard, setShowCard] = useState("take_note");
   const [noteList, setNoteList] = useState([]);
   let userData = JSON.parse(localStorage.getItem("userData"))
   let history = useHistory();
@@ -82,16 +71,19 @@ export default function DashBoard() {
     ))
   }
 
-  useEffect(() => {
+  const getNote = () => {
     services.getNoteList(localStorage.getItem("userToken"))
-      .then((res) => {
-        setNoteList(res.data.data.data);
-      })
-      .catch((err) => {
-        console.log( err);
-      });
-  });
+    .then((res) => {
+      setNoteList(res.data.data.data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  }
 
+  useEffect(() => {
+    getNote()
+ }, []);
 
   const handleLogout = () => {
     localStorage.clear();
@@ -227,9 +219,9 @@ export default function DashBoard() {
         </List>
       </Drawer>
       <div className="main">
-        <NewNote />
+        <NewNote GetNote={getNote}/>
         <div className="display-note">
-          {noteList.map((note) => (           
+          {noteList.map((note) => (
             <DisplayNote item={note} />
           ))}
         </div>
