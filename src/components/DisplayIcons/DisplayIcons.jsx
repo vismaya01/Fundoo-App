@@ -1,4 +1,4 @@
-import React, { useState} from 'react'
+import React, { useState } from 'react'
 import './displayIcons.css';
 import ImageOutlinedIcon from '@material-ui/icons/ImageOutlined';
 import AddAlertOutlinedIcon from '@material-ui/icons/AddAlertOutlined';
@@ -7,10 +7,37 @@ import ColorLensOutlinedIcon from '@material-ui/icons/ColorLensOutlined';
 import ArchiveOutlinedIcon from '@material-ui/icons/ArchiveOutlined';
 import MoreVertOutlinedIcon from '@material-ui/icons/MoreVertOutlined';
 import IconButton from '@material-ui/core/IconButton';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import Service from '../../sevices/NoteServices'
 
-const DisplayIcons = ({setBgColor}) => {
+const services = new Service()
+
+const DisplayIcons = ({ setBgColor, item, GetNote }) => {
     const [color, setColor] = useState(false)
     const [showColorList, setShowColorList] = useState(false);
+    const [anchorEl, setAnchorEl] = React.useState(null);
+
+
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
+    const handleTrashNotes = () => {
+        let data = {
+            noteIdList: [item.id] , isDeleted: true
+        }
+        services.trashNotes(data, localStorage.getItem("userToken")).then(res => {
+            console.log(res)
+        }).catch(err => {
+            console.log(err);
+        })
+        GetNote();
+    }
 
     const DATA = [
         { title: "Default", id: "#fff" },
@@ -68,9 +95,20 @@ const DisplayIcons = ({setBgColor}) => {
             <IconButton aria-label="Archive note">
                 <ArchiveOutlinedIcon fontSize="small" />
             </IconButton>
-            <IconButton aria-label="More">
+            <IconButton aria-label="More" onClick={handleClick}>
                 <MoreVertOutlinedIcon fontSize="small" />
             </IconButton>
+            <Menu
+                id="simple-menu"
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleClose}>
+                <MenuItem onClick={() => {
+                    handleClose();
+                    handleTrashNotes()
+                }}>Delete Note</MenuItem>
+            </Menu>
         </div>
     )
 }

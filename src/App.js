@@ -1,5 +1,5 @@
 import './App.css'
-import React, { useState } from "react";
+import React from "react";
 import Registration from './components/registration/registration'
 import Login from './components/login/login';
 import Forgotpassword from './components/forgotPassword/forgotPassword'
@@ -20,7 +20,9 @@ function App() {
           <Route exact path="/resetpassword/:token" component={Resetpassword} />
           <ProtectedRoute exact path="/dashBoard" component={DashBoard} />
           <Route path="*" >
-            <div>404 NOT FOUND</div>
+            <div style={{height: 500, display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+              *404 NOT FOUND*
+            </div>
           </Route>
         </Switch>
       </BrowserRouter>

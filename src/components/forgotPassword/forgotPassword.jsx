@@ -96,7 +96,11 @@ export default class forgotPassword extends React.Component {
         this.setState({
           snackBarOpen: true, snackBarMsg: "Set password link sent to you registered email, please check.",
         });
-        this.props.history.push("/")
+        {
+          setTimeout(() => {
+            this.props.history.push("/")
+          }, 1000);
+        }
       }).catch(error => {
         console.log(error);
         this.setState({

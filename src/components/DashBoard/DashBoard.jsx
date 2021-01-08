@@ -22,10 +22,8 @@ import DisplayNote from '../DisplayNote/displayNote'
 import { Avatar, Toolbar, List, IconButton, Button, InputBase, ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import Service from '../../sevices/NoteServices'
-import auth from '../../auth'
 
 const services = new Service()
-
 
 const drawerWidth = 240;
 
@@ -74,17 +72,17 @@ export default function DashBoard() {
 
   const getNote = () => {
     services.getNoteList(localStorage.getItem("userToken"))
-    .then((res) => {
-      setNoteList(res.data.data.data);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+      .then((res) => {
+        setNoteList(res.data.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   useEffect(() => {
     getNote()
- }, []);
+  }, []);
 
   const handleLogout = () => {
     localStorage.clear();
@@ -176,8 +174,8 @@ export default function DashBoard() {
         </div>
         <div className="cardActions">
           <Button variant="contained" onClick={() => {
-                  handleLogout();
-                  auth.logout()}}>Logout</Button>
+            handleLogout()
+          }}>Logout</Button>
         </div>
       </div>
     </div>
@@ -222,12 +220,8 @@ export default function DashBoard() {
         </List>
       </Drawer>
       <div className="main">
-        <NewNote GetNote={getNote}/>
-        <div className="display-note">
-          {noteList.map((note) => (
-            <DisplayNote item={note} />
-          ))}
-        </div>
+        <NewNote GetNote={getNote} />
+        <DisplayNote item={noteList} GetNote={getNote} />
       </div>
     </div>
   </div>

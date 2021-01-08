@@ -21,4 +21,12 @@ export default class NoteService {
         });
     }
 
+    trashNotes = (data, token) => {
+        return httpService.Post(`${this.baseUrl}/notes/trashNotes`, data, {
+            headers: {
+                Authorization: `${token}`,
+            }
+        });
+    }
+
 }

@@ -1,13 +1,23 @@
 import React from 'react'
 import { Route, Redirect } from 'react-router-dom'
-import auth from './auth'
+
+const isAuthenticated = () => {
+    let authendicated = false
+    if (localStorage.getItem('userToken') !== null) {
+        authendicated = true;
+    }
+    else {
+        authendicated = false;
+    }
+    return authendicated
+}
 
 export const ProtectedRoute = ({ component: Component, ...rest }) => {
     return (
         <Route {...rest} render={
             (props) => {
-                if(auth.isAuthenticated()) {
-                return <Component {...props} />
+                if (isAuthenticated()) {
+                    return <Component {...props} />
                 }
                 else {
                     return <Redirect to={
@@ -17,7 +27,7 @@ export const ProtectedRoute = ({ component: Component, ...rest }) => {
                                 from: props.location
                             }
                         }
-                    }/>
+                    } />
                 }
             }
         } />

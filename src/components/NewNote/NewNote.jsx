@@ -40,11 +40,11 @@ const NewNote = ({GetNote}) => {
             formData.set("color", bgColor);
             services.saveNotes(formData, localStorage.getItem("userToken")).then(res => {
                 console.log(res)
+                GetNote()
             }).catch((err) => {
                     console.log( err);
                 });
         }
-        GetNote()
     };
 
     return (<div className="notes">
@@ -58,13 +58,13 @@ const NewNote = ({GetNote}) => {
             <div className="contain container1" style={{ backgroundColor: bgColor }}>
                 <div className="note1" >
                     <div className="title pd">
-                        <InputBase placeholder='Title' fullWidth value={title} onChange={(e) => setTitle(e.target.value)} />
+                        <InputBase placeholder='Title' fullWidth  onChange={(e) => setTitle(e.target.value)} />
                         <IconButton onClick={handlePin}>
                             <img src={pin ? FilledPin : OutlinedPin} alt='pin' />
                         </IconButton>
                     </div>
                     <div className='note pd'>
-                        <InputBase placeholder='Take a note...' fullWidth value={description}
+                        <InputBase placeholder='Take a note...' fullWidth 
                             onChange={(e) => setDescription(e.target.value)} />
                     </div>
                 </div>

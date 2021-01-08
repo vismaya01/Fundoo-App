@@ -204,7 +204,11 @@ export default class registration extends React.Component {
         this.setState({
           snackBarOpen: true, snackBarMsg: 'Registration is successfull',
         });
-        this.props.history.push("/")
+        {
+          setTimeout(() => {
+            this.props.history.push("/")
+          }, 1000);
+        }
       }).catch(error => {
         console.log(error);
         this.setState({

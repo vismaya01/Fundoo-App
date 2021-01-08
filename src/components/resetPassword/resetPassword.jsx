@@ -37,7 +37,7 @@ export default class resetPassword extends React.Component {
       this.emptyField();
     }
   }
-  
+
   emptyField = () => {
     this.setState({
       passwordFlag: false,
@@ -107,17 +107,14 @@ export default class resetPassword extends React.Component {
 
   handleSubmit = () => {
     if (this.validate()) {
-      console.log('Rest password failed');
       this.setState({
         snackBarOpen: true, snackBarMsg: 'Rest password failed'
       })
     }
     else {
-      console.log('Rest password successfull', this.state.email, this.state.password);
       let userData = {
         'newPassword': this.state.password,
       }
-      console.log(userData)
       this.emptyTextField();
       const token = this.props.match.params.token
       service.restPassword(userData, token).then(data => {
@@ -125,7 +122,11 @@ export default class resetPassword extends React.Component {
         this.setState({
           snackBarOpen: true, snackBarMsg: 'Rest password successfull',
         })
-        this.props.history.push("/")
+        {
+          setTimeout(() => {
+            this.props.history.push("/")
+          }, 1000);
+        }
       }).catch(error => {
         console.log(error);
         this.setState({
