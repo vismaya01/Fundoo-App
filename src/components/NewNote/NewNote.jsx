@@ -1,4 +1,4 @@
-import React, { useState} from 'react'
+import React, { useState } from 'react'
 import './NewNote.css';
 import FilledPin from '../assets/filledpin.svg'
 import OutlinedPin from '../assets/outlinedpin.svg'
@@ -13,7 +13,7 @@ import DisplayIcons from '../DisplayIcons/DisplayIcons'
 
 const services = new Service()
 
-const NewNote = ({GetNote}) => {
+const NewNote = (props) => {
     const [open, setOpen] = useState(true);
     const [pin, setPin] = useState(false)
     const [title, setTitle] = useState('');
@@ -40,10 +40,10 @@ const NewNote = ({GetNote}) => {
             formData.set("color", bgColor);
             services.saveNotes(formData, localStorage.getItem("userToken")).then(res => {
                 console.log(res)
-                GetNote()
+                props.GetNote()
             }).catch((err) => {
-                    console.log( err);
-                });
+                console.log(err);
+            });
         }
     };
 
@@ -58,20 +58,20 @@ const NewNote = ({GetNote}) => {
             <div className="contain container1" style={{ backgroundColor: bgColor }}>
                 <div className="note1" >
                     <div className="title pd">
-                        <InputBase placeholder='Title' fullWidth  onChange={(e) => setTitle(e.target.value)} />
+                        <InputBase placeholder='Title' fullWidth onChange={(e) => setTitle(e.target.value)} />
                         <IconButton onClick={handlePin}>
                             <img src={pin ? FilledPin : OutlinedPin} alt='pin' />
                         </IconButton>
                     </div>
                     <div className='note pd'>
-                        <InputBase placeholder='Take a note...' fullWidth 
+                        <InputBase placeholder='Take a note...' fullWidth
                             onChange={(e) => setDescription(e.target.value)} />
                     </div>
                 </div>
                 <div className="toolbar">
-                    <DisplayIcons setBgColor={setBgColor}/>
+                    <DisplayIcons setBgColor={setBgColor} />
                     <div className="close-button">
-                        <Button size="small" onClick={() => {saveNote(); handleClose();}}>Close</Button>
+                        <Button size="small" onClick={() => { saveNote(); handleClose(); }}>Close</Button>
                     </div>
                 </div>
             </div>

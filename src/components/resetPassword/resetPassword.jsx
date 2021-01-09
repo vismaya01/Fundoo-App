@@ -122,11 +122,10 @@ export default class resetPassword extends React.Component {
         this.setState({
           snackBarOpen: true, snackBarMsg: 'Rest password successfull',
         })
-        {
-          setTimeout(() => {
-            this.props.history.push("/")
-          }, 1000);
-        }
+        setTimeout(() => {
+          this.props.history.push("/")
+        }, 1000);
+
       }).catch(error => {
         console.log(error);
         this.setState({

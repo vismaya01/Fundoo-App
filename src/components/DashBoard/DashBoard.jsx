@@ -17,11 +17,11 @@ import AppIcon from '@material-ui/icons/Apps';
 import ListIcon from '@material-ui/icons/List';
 import SettingsIcon from '@material-ui/icons/Settings';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import NewNote from '../NewNote/NewNote'
-import DisplayNote from '../DisplayNote/displayNote'
+import NewNote from '../NewNote/NewNote';
+import DisplayNote from '../DisplayNote/displayNote';
 import { Avatar, Toolbar, List, IconButton, Button, InputBase, ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
-import Service from '../../sevices/NoteServices'
+import Service from '../../sevices/NoteServices';
 
 const services = new Service()
 

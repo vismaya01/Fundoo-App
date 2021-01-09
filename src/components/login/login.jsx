@@ -131,11 +131,9 @@ export default class login extends React.Component {
         this.setState({
           snackBarOpen: true, snackBarMsg: 'Login is successfull'
         });
-        {
-          setTimeout(() => {
-            this.props.history.push("/dashBoard")
-          }, 1000);
-        }
+        setTimeout(() => {
+          this.props.history.push("/dashBoard")
+        }, 1000);
       }).catch(error => {
         console.log(error);
         this.setState({

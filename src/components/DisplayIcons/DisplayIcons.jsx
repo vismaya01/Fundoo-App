@@ -33,10 +33,10 @@ const DisplayIcons = ({ setBgColor, item, GetNote }) => {
         }
         services.trashNotes(data, localStorage.getItem("userToken")).then(res => {
             console.log(res)
+            GetNote();
         }).catch(err => {
             console.log(err);
-        })
-        GetNote();
+        })      
     }
 
     const DATA = [

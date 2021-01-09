@@ -29,4 +29,12 @@ export default class NoteService {
         });
     }
 
+    updateNotes = (data, token) => {
+        return httpService.Post(`${this.baseUrl}/notes/updateNotes`, data, {
+            headers: {
+                Authorization: `${token}`,
+            }
+        });
+    }
+
 }
