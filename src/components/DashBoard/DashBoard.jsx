@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './DashBoard.css';
 import logo from '../assets/logo.png'
 import Drawer from '@material-ui/core/Drawer';
@@ -17,13 +17,13 @@ import AppIcon from '@material-ui/icons/Apps';
 import ListIcon from '@material-ui/icons/List';
 import SettingsIcon from '@material-ui/icons/Settings';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import NewNote from '../NewNote/NewNote';
-import DisplayNote from '../DisplayNote/displayNote';
 import { Avatar, Toolbar, List, IconButton, Button, InputBase, ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
-import Service from '../../sevices/NoteServices';
-
-const services = new Service()
+import { BrowserRouter, Route } from 'react-router-dom'
+import Note from '../Note/Note'
+import Trash from '../Trash/Trash'
+import Archive from '../Archive/Archive'
+import { Link } from 'react-router-dom'
 
 const drawerWidth = 240;
 
@@ -52,10 +52,8 @@ export default function DashBoard() {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [view, setView] = useState(false);
-  const [color, setColor] = useState(false);
   const [keyValue, setKeyValue] = useState(false);
   const [hide, setHide] = useState(false)
-  const [noteList, setNoteList] = useState([]);
   let userData = JSON.parse(localStorage.getItem("userData"))
   let history = useHistory();
   let userEmail = ''
@@ -69,20 +67,6 @@ export default function DashBoard() {
       (userLastName = item.lastName)
     ))
   }
-
-  const getNote = () => {
-    services.getNoteList(localStorage.getItem("userToken"))
-      .then((res) => {
-        setNoteList(res.data.data.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-
-  useEffect(() => {
-    getNote()
-  }, []);
 
   const handleLogout = () => {
     localStorage.clear();
@@ -102,7 +86,7 @@ export default function DashBoard() {
   }
 
   const handleClass = (value) => {
-    setColor(true);
+    setOpen(true);
     setKeyValue(value);
   }
 
@@ -115,115 +99,119 @@ export default function DashBoard() {
   }
 
   return (<div className='Content' >
-    <div className="header-content">
-      <div className="row-head  row-head1" onClick={handleUnHideAccount}>
-        <Toolbar>
-          <IconButton
-            onClick={open ? handleDrawerClose : handleDrawerOpen}
-            aria-label="open drawer"
-            edge="start">
-            <MenuIcon />
-          </IconButton>
-        </Toolbar>
-        <img className='logo' src={logo} alt='img' />
-        <div className="name">Fundoo</div>
-      </div>
-      <div className="row-head  row-head2" onClick={handleUnHideAccount}>
-        <div className="search" >
+    <BrowserRouter>
+      <div className="header-content">
+        <div className="row-head  row-head1" onClick={handleUnHideAccount}>
+          <Toolbar>
+            <IconButton
+              onClick={open ? handleDrawerClose : handleDrawerOpen}
+              aria-label="open drawer"
+              edge="start">
+              <MenuIcon />
+            </IconButton>
+          </Toolbar>
+          <img className='logo' src={logo} alt='img' />
+          <div className="name">Fundoo</div>
+        </div>
+        <div className="row-head  row-head2" onClick={handleUnHideAccount}>
+          <div className="search" >
+            <IconButton>
+              <SearchIcon />
+            </IconButton>
+            <div className="input">
+              <InputBase placeholder="Search" fullWidth />
+            </div>
+            <IconButton className='clear-icon'>
+              <ClearIcon />
+            </IconButton>
+          </div>
+          <div className="row-icons">
+            <IconButton>
+              <Refresh />
+            </IconButton>
+            <IconButton className='App-icon' onClick={handleViewOpen} >
+              {view ? <AppIcon /> : <ListIcon />}
+            </IconButton>
+            <IconButton>
+              <SettingsIcon />
+            </IconButton>
+          </div>
+        </div>
+        <div className="row-head row-head3">
           <IconButton>
-            <SearchIcon />
+            <AppIcon />
           </IconButton>
-          <div className="input">
-            <InputBase placeholder="Search" fullWidth />
-          </div>
-          <IconButton className='clear-icon'>
-            <ClearIcon />
+          <IconButton onClick={handleHideAccount}>
+            <AccountCircleIcon fontSize='large' />
           </IconButton>
         </div>
-        <div className="row-icons">
-          <IconButton>
-            <Refresh />
-          </IconButton>
-          <IconButton className='App-icon' onClick={handleViewOpen} >
-            {view ? <AppIcon /> : <ListIcon />}
-          </IconButton>
-          <IconButton>
-            <SettingsIcon />
-          </IconButton>
+        <div className={hide ? "true profile" : "false profile"} >
+          <div className="person">
+            <div className="avatarContainer">
+              <Avatar className="avatarIcon" alt='profile' />
+            </div>
+            <div className='name' style={{ fontSize: 20 }}>
+              {userFirstName} {userLastName}
+            </div>
+            <div className='name' style={{ fontSize: 15 }}>
+              {userEmail}
+            </div>
+          </div>
+          <div className="cardActions">
+            <Button variant="contained" onClick={() => {
+              handleLogout()
+            }}>Logout</Button>
+          </div>
         </div>
       </div>
-      <div className="row-head row-head3">
-        <IconButton>
-          <AppIcon />
-        </IconButton>
-        <IconButton onClick={handleHideAccount}>
-          <AccountCircleIcon fontSize='large' />
-        </IconButton>
-      </div>
-      <div className={hide ? "true profile" : "false profile"} >
-        <div className="person">
-          <div className="avatarContainer">
-            <Avatar className="avatarIcon" alt='profile' />
-          </div>
-          <div className='name' style={{ fontSize: 20 }}>
-            {userFirstName} {userLastName}
-          </div>
-          <div className='name' style={{ fontSize: 15 }}>
-            {userEmail}
-          </div>
-        </div>
-        <div className="cardActions">
-          <Button variant="contained" onClick={() => {
-            handleLogout()
-          }}>Logout</Button>
-        </div>
-      </div>
-    </div>
-    <div className="main-content" onClick={handleUnHideAccount}>
-      <Drawer variant="permanent"
-        className={clsx({
-          [classes.drawerOpen]: open,
-          [classes.drawerClose]: !open,
-        })}
-        classes={{
-          paper: clsx({
+      <div className="main-content" onClick={handleUnHideAccount}>
+        <Drawer variant="permanent"
+          className={clsx({
             [classes.drawerOpen]: open,
             [classes.drawerClose]: !open,
-          }),
-        }}>
-        <List>
-          <ListItem button onClick={() => { handleClass('Notes'); handleDrawerOpen() }}
-            className={color && keyValue === 'Notes' ? 'pink' : 'white'} key='Notes'>
-            <ListItemIcon><EmojiObjectsOutlinedIcon /></ListItemIcon>
-            <ListItemText>Notes</ListItemText>
-          </ListItem>
-          <ListItem button onClick={() => { handleClass('Reminder'); handleDrawerOpen() }}
-            className={color && keyValue === 'Reminder' ? 'pink' : 'white'} key='Reminder'>
-            <ListItemIcon><NotificationsNoneOutlinedIcon /></ListItemIcon>
-            <ListItemText>Reminder</ListItemText>
-          </ListItem>
-          <ListItem button onClick={() => { handleClass('Edit'); handleDrawerOpen() }}
-            className={color && keyValue === 'Edit' ? 'pink' : 'white'} key='Edit'>
-            <ListItemIcon><EditOutlinedIcon /></ListItemIcon>
-            <ListItemText>Edit labels</ListItemText>
-          </ListItem>
-          <ListItem button onClick={() => { handleClass('Archive'); handleDrawerOpen() }}
-            className={color && keyValue === 'Archive' ? 'pink' : 'white'} key='Archive'>
-            <ListItemIcon><ArchiveOutlinedIcon /></ListItemIcon>
-            <ListItemText>Archive</ListItemText>
-          </ListItem>
-          <ListItem button onClick={() => { handleClass('Delete'); handleDrawerOpen() }}
-            className={color && keyValue === 'Delete' ? 'pink' : 'white'} key='Delete'>
-            <ListItemIcon><Delete /></ListItemIcon>
-            <ListItemText>Trash</ListItemText>
-          </ListItem>
-        </List>
-      </Drawer>
-      <div className="main">
-        <NewNote GetNote={getNote} />
-        <DisplayNote item={noteList} GetNote={getNote} />
+          })}
+          classes={{
+            paper: clsx({
+              [classes.drawerOpen]: open,
+              [classes.drawerClose]: !open,
+            }),
+          }}>
+          <List>
+            <ListItem button component={Link} to="/dashBoard/notes"
+              onClick={() => { handleClass('Notes') }}
+              className={keyValue === 'Notes' ? 'pink' : 'white'} key='Notes'>
+              <ListItemIcon><EmojiObjectsOutlinedIcon /></ListItemIcon>
+              <ListItemText>Notes</ListItemText>
+            </ListItem>
+            <ListItem button onClick={() => { handleClass('Reminder') }}
+              className={keyValue === 'Reminder' ? 'pink' : 'white'} key='Reminder'>
+              <ListItemIcon><NotificationsNoneOutlinedIcon /></ListItemIcon>
+              <ListItemText>Reminder</ListItemText>
+            </ListItem>
+            <ListItem button onClick={() => { handleClass('Edit') }}
+              className={keyValue === 'Edit' ? 'pink' : 'white'} key='Edit'>
+              <ListItemIcon><EditOutlinedIcon /></ListItemIcon>
+              <ListItemText>Edit labels</ListItemText>
+            </ListItem>
+            <ListItem button onClick={() => { handleClass('Archive') }}
+              component={Link} to="/dashBoard/archives"
+              className={keyValue === 'Archive' ? 'pink' : 'white'} key='Archive'>
+              <ListItemIcon><ArchiveOutlinedIcon /></ListItemIcon>
+              <ListItemText>Archive</ListItemText>
+            </ListItem>
+            <ListItem button onClick={() => { handleClass('Delete') }}
+              component={Link} to="/dashBoard/trashes"
+              className={keyValue === 'Delete' ? 'pink' : 'white'} key='Delete'>
+              <ListItemIcon><Delete /></ListItemIcon>
+              <ListItemText>Trash</ListItemText>
+            </ListItem>
+          </List>
+        </Drawer>
+          <Route exact path="/dashBoard/notes" component={Note} />
+          <Route exact path="/dashBoard/trashes" component={Trash} />
+          <Route exact path="/dashBoard/archives" component={Archive} />
       </div>
-    </div>
+    </BrowserRouter>
   </div>
   );
 }

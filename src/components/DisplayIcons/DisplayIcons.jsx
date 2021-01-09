@@ -33,6 +33,19 @@ const DisplayIcons = ({ setBgColor, item, GetNote }) => {
         }
         services.trashNotes(data, localStorage.getItem("userToken")).then(res => {
             console.log(res)
+            setAnchorEl(null);
+            GetNote();
+        }).catch(err => {
+            console.log(err);
+        })      
+    }
+
+    const handleArchiveNotes = () => {
+        let data = {
+            noteIdList: [item.id] , isArchived: true,
+        }
+        services.archiveNotes(data, localStorage.getItem("userToken")).then(res => {
+            console.log(res)
             GetNote();
         }).catch(err => {
             console.log(err);
@@ -92,7 +105,7 @@ const DisplayIcons = ({ setBgColor, item, GetNote }) => {
             <IconButton aria-label="Add image">
                 <ImageOutlinedIcon fontSize="small" />
             </IconButton>
-            <IconButton aria-label="Archive note">
+            <IconButton aria-label="Archive note" onClick={handleArchiveNotes}>
                 <ArchiveOutlinedIcon fontSize="small" />
             </IconButton>
             <IconButton aria-label="More" onClick={handleClick}>
@@ -104,10 +117,7 @@ const DisplayIcons = ({ setBgColor, item, GetNote }) => {
                 keepMounted
                 open={Boolean(anchorEl)}
                 onClose={handleClose}>
-                <MenuItem onClick={() => {
-                    handleClose();
-                    handleTrashNotes()
-                }}>Delete Note</MenuItem>
+                <MenuItem onClick={handleTrashNotes}>Delete Note</MenuItem>
             </Menu>
         </div>
     )

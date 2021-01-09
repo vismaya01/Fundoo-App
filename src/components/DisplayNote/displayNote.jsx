@@ -19,7 +19,7 @@ const DisplayNote = (props) => {
 
     return (        
         <div className="display-note">
-            {props.item.filter(item => item.isDeleted === false).map((item) => (
+            {props.item.map((item) => (
                 <div className="display">
                     <div className="addNote" style={{ backgroundColor: item.color }}>
                         <div className="notes1" onClick={() => handleUpdate(item)}>
