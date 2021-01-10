@@ -68,13 +68,10 @@
 }
 
 @media screen and (max-width: 700px) {
-    .notes {
-        width: max-content;
-    }
 
     .contain {
-        width: max-content;
-        margin: 16px 20px 8px 20px;
+        width: 99%;
+        margin: 16px 30px 8px 30px;
     }
 
     .note { 

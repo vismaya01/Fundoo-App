@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import DisplayNote from '../DisplayNote/displayNote';
 import Service from '../../sevices/NoteServices';
 
@@ -19,7 +19,7 @@ export default function Trash() {
     }
 
     useEffect(() => {
-        getTrashNote();
+        getTrashNote()
     }, []);
 
     return (

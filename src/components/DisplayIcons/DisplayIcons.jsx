@@ -13,11 +13,11 @@ import Service from '../../sevices/NoteServices'
 
 const services = new Service()
 
-const DisplayIcons = ({ setBgColor, item, GetNote }) => {
+const DisplayIcons = (props) => {
     const [color, setColor] = useState(false)
     const [showColorList, setShowColorList] = useState(false);
     const [anchorEl, setAnchorEl] = React.useState(null);
-
+    let Bgcolor = props.color
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -29,27 +29,43 @@ const DisplayIcons = ({ setBgColor, item, GetNote }) => {
 
     const handleTrashNotes = () => {
         let data = {
-            noteIdList: [item.id] , isDeleted: true
+            noteIdList: [props.item.id], isDeleted: true
         }
         services.trashNotes(data, localStorage.getItem("userToken")).then(res => {
             console.log(res)
             setAnchorEl(null);
-            GetNote();
+            props.GetNote();
         }).catch(err => {
             console.log(err);
-        })      
+        })
     }
 
     const handleArchiveNotes = () => {
-        let data = {
-            noteIdList: [item.id] , isArchived: true,
+        if (props.id !== '') {
+            let data = {
+                noteIdList: [props.item.id], isArchived: true,
+            }
+            services.archiveNotes(data, localStorage.getItem("userToken")).then(res => {
+                console.log(res)
+                props.GetNote();
+            }).catch(err => {
+                console.log(err);
+            })
         }
-        services.archiveNotes(data, localStorage.getItem("userToken")).then(res => {
-            console.log(res)
-            GetNote();
-        }).catch(err => {
-            console.log(err);
-        })      
+    }
+
+    const updateColor = () => {
+        if (props.id !== '') {
+            let data = {
+                noteIdList: [props.id], color : Bgcolor
+            }
+            services.updateColor(data, localStorage.getItem("userToken")).then(res => {
+                console.log(res)
+                props.GetNote();
+            }).catch(err => {
+                console.log(err);
+            })
+        }
     }
 
     const DATA = [
@@ -68,7 +84,8 @@ const DisplayIcons = ({ setBgColor, item, GetNote }) => {
     ];
 
     const selectColor = (value) => {
-        setBgColor(value);
+        props.setBgColor(value);
+        Bgcolor=value;
     };
 
     const handleColor = () => {
@@ -88,14 +105,14 @@ const DisplayIcons = ({ setBgColor, item, GetNote }) => {
                 <PersonAddOutlinedIcon fontSize="small" />
             </IconButton>
             <IconButton aria-label="Change color"
-                onMouseOver={() => { handleColor(); setShowColorList(!showColorList) }} onMouseOut={handleColorOut}>
+                onClick={() => { handleColor(); setShowColorList(!showColorList) }}>
                 <ColorLensOutlinedIcon fontSize="small" />
             </IconButton>
             {showColorList ? (
                 <div className={color ? "visible color-change" : "NV color-change"}
                     onMouseOver={handleColor} onMouseOut={handleColorOut} style={{ width: 150, height: 125 }}>
                     {DATA.map((item) => (
-                        <button onMouseOver={handleColor} onClick={() => selectColor(item.id)}
+                        <button onMouseOver={handleColor} onClick={() => { selectColor(item.id); updateColor() }}
                             className="button-color"
                             style={{ backgroundColor: item.id }}
                         ></button>
@@ -105,20 +122,22 @@ const DisplayIcons = ({ setBgColor, item, GetNote }) => {
             <IconButton aria-label="Add image">
                 <ImageOutlinedIcon fontSize="small" />
             </IconButton>
-            <IconButton aria-label="Archive note" onClick={handleArchiveNotes}>
-                <ArchiveOutlinedIcon fontSize="small" />
+            <IconButton aria-label="Archive note"  >
+                <ArchiveOutlinedIcon fontSize="small" onClick={handleArchiveNotes} />
             </IconButton>
             <IconButton aria-label="More" onClick={handleClick}>
                 <MoreVertOutlinedIcon fontSize="small" />
             </IconButton>
-            <Menu
-                id="simple-menu"
-                anchorEl={anchorEl}
-                keepMounted
-                open={Boolean(anchorEl)}
-                onClose={handleClose}>
-                <MenuItem onClick={handleTrashNotes}>Delete Note</MenuItem>
-            </Menu>
+            {props.noTrash ? null :
+                <Menu
+                    id="simple-menu"
+                    anchorEl={anchorEl}
+                    keepMounted
+                    open={Boolean(anchorEl)}
+                    onClose={handleClose}>
+                    <MenuItem onClick={handleTrashNotes}>Delete Note</MenuItem>
+                </Menu>
+            }
         </div>
     )
 }

@@ -24,10 +24,16 @@ import Note from '../Note/Note'
 import Trash from '../Trash/Trash'
 import Archive from '../Archive/Archive'
 import { Link } from 'react-router-dom'
+import Appbar from '@material-ui/core/AppBar'
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
+  appBar: {
+    backgroundColor: '#fff',
+    boxShadow: 'none'
+  },
+
   drawerOpen: {
     width: drawerWidth,
     transition: theme.transitions.create('width', {
@@ -100,6 +106,7 @@ export default function DashBoard() {
 
   return (<div className='Content' >
     <BrowserRouter>
+    <Appbar className={classes.appBar}>
       <div className="header-content">
         <div className="row-head  row-head1" onClick={handleUnHideAccount}>
           <Toolbar>
@@ -164,6 +171,7 @@ export default function DashBoard() {
           </div>
         </div>
       </div>
+      </Appbar>
       <div className="main-content" onClick={handleUnHideAccount}>
         <Drawer variant="permanent"
           className={clsx({

@@ -61,4 +61,12 @@ export default class NoteService {
         });
     }
 
+    updateColor = (data, token) => {
+        return httpService.Post(`${this.baseUrl}/notes/changesColorNotes`, data, {
+            headers: {
+                Authorization: `${token}`,
+            }
+        });
+    }
+
 }

@@ -19,13 +19,11 @@ const NewNote = (props) => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [bgColor, setBgColor] = useState('#fff')
+    const noTrash = true
+    const id = ''
 
     const handleClick = () => {
         setOpen(false)
-    }
-
-    const handleClose = () => {
-        setOpen(true)
     }
 
     const handlePin = () => {
@@ -41,10 +39,13 @@ const NewNote = (props) => {
             services.saveNotes(formData, localStorage.getItem("userToken")).then(res => {
                 console.log(res)
                 props.GetNote()
+                setBgColor('#fff')
+                setTitle('')
             }).catch((err) => {
                 console.log(err);
             });
         }
+        setOpen(true)
     };
 
     return (<div className="notes">
@@ -69,9 +70,9 @@ const NewNote = (props) => {
                     </div>
                 </div>
                 <div className="toolbar">
-                    <DisplayIcons setBgColor={setBgColor} />
+                    <DisplayIcons setBgColor={setBgColor} noTrash={noTrash} id={id}/>
                     <div className="close-button">
-                        <Button size="small" onClick={() => { saveNote(); handleClose(); }}>Close</Button>
+                        <Button size="small" onClick={() => { saveNote() }}>Close</Button>
                     </div>
                 </div>
             </div>

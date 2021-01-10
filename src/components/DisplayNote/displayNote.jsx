@@ -4,9 +4,10 @@ import DisplayIcons from '../DisplayIcons/DisplayIcons'
 import UpdateNote from '../UpdateNote/UpdateNote';
 
 const DisplayNote = (props) => {
-    const [bgColor, setBgColor] = useState('#fff')
+    const [bgColor, setBgColor] = useState("#fff")
     const [note, setNote] = useState([])
     const [update, setUpdate] = useState(false)
+    const onArchive = true
 
     const handleUpdate = (value) => {
         setUpdate(true)
@@ -21,7 +22,7 @@ const DisplayNote = (props) => {
         <div className="display-note">
             {props.item.map((item) => (
                 <div className="display">
-                    <div className="addNote" style={{ backgroundColor: item.color }}>
+                    <div className="addNote"  style={{ backgroundColor: item.color}}>
                         <div className="notes1" onClick={() => handleUpdate(item)}>
                             <div className="title pds">
                                 {item.title}
@@ -31,12 +32,12 @@ const DisplayNote = (props) => {
                             </div>
                         </div>
                         <div className="toolbar1">
-                            <DisplayIcons setBgColor={setBgColor} item={item} GetNote={props.GetNote} />
+                            <DisplayIcons setBgColor={setBgColor} item={item} id={item.id} GetNote={props.GetNote} noArchive={onArchive} />
                         </div>
                     </div>
                 </div>
             ))}
-            <UpdateNote item={note} open={update} close={handleClose} setBgColor={setBgColor} GetNote={props.GetNote}/>
+            <UpdateNote item={note} open={update} close={handleClose} GetNote={props.GetNote}/>
         </div>
     );
 }
