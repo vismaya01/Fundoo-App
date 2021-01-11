@@ -18,12 +18,7 @@ function App() {
           <Route exact path="/" component={Login} />
           <Route exact path="/forgotpassword" component={Forgotpassword} />
           <Route exact path="/resetpassword/:token" component={Resetpassword} />
-          <ProtectedRoute exact path="/dashBoard/notes" component={DashBoard} />
-          {/* <Route path="*" >
-            <div style={{height: 500, display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-              *404 NOT FOUND*
-            </div>
-          </Route> */}
+          <ProtectedRoute path="/dashBoard" component={DashBoard} />
         </Switch>
       </BrowserRouter>
     </div>

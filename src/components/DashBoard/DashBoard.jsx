@@ -19,21 +19,15 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { Avatar, Toolbar, List, IconButton, Button, InputBase, ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
-import { BrowserRouter, Route } from 'react-router-dom'
+import { Switch, Route } from 'react-router-dom'
 import Note from '../Note/Note'
 import Trash from '../Trash/Trash'
 import Archive from '../Archive/Archive'
 import { Link } from 'react-router-dom'
-import Appbar from '@material-ui/core/AppBar'
 
-const drawerWidth = 240;
+const drawerWidth = 200;
 
 const useStyles = makeStyles((theme) => ({
-  appBar: {
-    backgroundColor: '#fff',
-    boxShadow: 'none'
-  },
-
   drawerOpen: {
     width: drawerWidth,
     transition: theme.transitions.create('width', {
@@ -92,7 +86,6 @@ export default function DashBoard() {
   }
 
   const handleClass = (value) => {
-    setOpen(true);
     setKeyValue(value);
   }
 
@@ -105,10 +98,8 @@ export default function DashBoard() {
   }
 
   return (<div className='Content' >
-    <BrowserRouter>
-    <Appbar className={classes.appBar}>
       <div className="header-content">
-        <div className="row-head  row-head1" onClick={handleUnHideAccount}>
+        <div className="row-head1" onClick={handleUnHideAccount}>
           <Toolbar>
             <IconButton
               onClick={open ? handleDrawerClose : handleDrawerOpen}
@@ -120,7 +111,7 @@ export default function DashBoard() {
           <img className='logo' src={logo} alt='img' />
           <div className="name">Fundoo</div>
         </div>
-        <div className="row-head  row-head2" onClick={handleUnHideAccount}>
+        <div className="row-head2" onClick={handleUnHideAccount}>
           <div className="search" >
             <IconButton>
               <SearchIcon />
@@ -144,7 +135,7 @@ export default function DashBoard() {
             </IconButton>
           </div>
         </div>
-        <div className="row-head row-head3">
+        <div className="row-head3">
           <IconButton>
             <AppIcon />
           </IconButton>
@@ -171,55 +162,54 @@ export default function DashBoard() {
           </div>
         </div>
       </div>
-      </Appbar>
-      <div className="main-content" onClick={handleUnHideAccount}>
-        <Drawer variant="permanent"
-          className={clsx({
+    <div className="main-content" onClick={handleUnHideAccount}>
+      <Drawer variant="permanent"
+        className={clsx({
+          [classes.drawerOpen]: open,
+          [classes.drawerClose]: !open,
+        })}
+        classes={{
+          paper: clsx({
             [classes.drawerOpen]: open,
             [classes.drawerClose]: !open,
-          })}
-          classes={{
-            paper: clsx({
-              [classes.drawerOpen]: open,
-              [classes.drawerClose]: !open,
-            }),
-          }}>
-          <List>
-            <ListItem button component={Link} to="/dashBoard/notes"
-              onClick={() => { handleClass('Notes') }}
-              className={keyValue === 'Notes' ? 'pink' : 'white'} key='Notes'>
-              <ListItemIcon><EmojiObjectsOutlinedIcon /></ListItemIcon>
-              <ListItemText>Notes</ListItemText>
-            </ListItem>
-            <ListItem button onClick={() => { handleClass('Reminder') }}
-              className={keyValue === 'Reminder' ? 'pink' : 'white'} key='Reminder'>
-              <ListItemIcon><NotificationsNoneOutlinedIcon /></ListItemIcon>
-              <ListItemText>Reminder</ListItemText>
-            </ListItem>
-            <ListItem button onClick={() => { handleClass('Edit') }}
-              className={keyValue === 'Edit' ? 'pink' : 'white'} key='Edit'>
-              <ListItemIcon><EditOutlinedIcon /></ListItemIcon>
-              <ListItemText>Edit labels</ListItemText>
-            </ListItem>
-            <ListItem button onClick={() => { handleClass('Archive') }}
-              component={Link} to="/dashBoard/archives"
-              className={keyValue === 'Archive' ? 'pink' : 'white'} key='Archive'>
-              <ListItemIcon><ArchiveOutlinedIcon /></ListItemIcon>
-              <ListItemText>Archive</ListItemText>
-            </ListItem>
-            <ListItem button onClick={() => { handleClass('Delete') }}
-              component={Link} to="/dashBoard/trashes"
-              className={keyValue === 'Delete' ? 'pink' : 'white'} key='Delete'>
-              <ListItemIcon><Delete /></ListItemIcon>
-              <ListItemText>Trash</ListItemText>
-            </ListItem>
-          </List>
-        </Drawer>
-          <Route exact path="/dashBoard/notes" component={Note} />
-          <Route exact path="/dashBoard/trashes" component={Trash} />
-          <Route exact path="/dashBoard/archives" component={Archive} />
-      </div>
-    </BrowserRouter>
+          }),
+        }}>
+        <List onMouseOver={handleDrawerOpen} onMouseOut={handleDrawerClose}>
+          <ListItem button component={Link} to="/dashBoard/notes"  onClick={() => { handleClass('Notes') }}
+            className={keyValue === 'Notes' ? 'pink' : 'white'} key='Notes'>
+            <ListItemIcon><EmojiObjectsOutlinedIcon /></ListItemIcon>
+            <ListItemText>Notes</ListItemText>
+          </ListItem>
+          <ListItem button onClick={() => { handleClass('Reminder') }}
+            className={keyValue === 'Reminder' ? 'pink' : 'white'} key='Reminder'>
+            <ListItemIcon><NotificationsNoneOutlinedIcon /></ListItemIcon>
+            <ListItemText>Reminder</ListItemText>
+          </ListItem>
+          <ListItem button onClick={() => { handleClass('Edit') }}
+            className={keyValue === 'Edit' ? 'pink' : 'white'} key='Edit'>
+            <ListItemIcon><EditOutlinedIcon /></ListItemIcon>
+            <ListItemText>Edit</ListItemText>
+          </ListItem>
+          <ListItem button onClick={() => { handleClass('Archive') }}
+            component={Link} to="/dashBoard/archives"
+            className={keyValue === 'Archive' ? 'pink' : 'white'} key='Archive'>
+            <ListItemIcon><ArchiveOutlinedIcon /></ListItemIcon>
+            <ListItemText>Archive</ListItemText>
+          </ListItem>
+          <ListItem button onClick={() => { handleClass('Delete') }}
+            component={Link} to="/dashBoard/trashes"
+            className={keyValue === 'Delete' ? 'pink' : 'white'} key='Delete'>
+            <ListItemIcon><Delete /></ListItemIcon>
+            <ListItemText>Trash</ListItemText>
+          </ListItem>
+        </List>
+      </Drawer>
+      <Switch>
+        <Route exact path="/dashBoard/notes" component={Note} />
+        <Route exact path="/dashBoard/trashes" component={Trash} />
+        <Route exact path="/dashBoard/archives" component={Archive} />
+      </Switch>
+    </div>
   </div>
   );
 }

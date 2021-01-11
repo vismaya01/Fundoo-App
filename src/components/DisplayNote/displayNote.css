@@ -1,7 +1,3 @@
-.display {
-    display: flex;
-    width: 240px;
-}
 
 .addNote {
     width: 240px;
@@ -18,16 +14,23 @@
 
 .pds {
     letter-spacing: .00625em;
-    padding: 5px;
-    height: 24px;
+    padding: 6px;
+    overflow-wrap: break-word;
+}
+
+.tool {
+    height: 40px;
 }
 
 .toolbar1 {
-    display: flex;
-    padding-left: 10px ;
+    display: none;
+
 }
-.toolbar1 > button {
-    padding: 6px;
+
+.addNote:hover .toolbar1{
+    display: block;
+    padding-left: 10px;
+
 }
 
 @media screen and (max-width: 600px) {
@@ -36,6 +39,6 @@
     }
 
     .addNote {
-        width: 80%;
+        width: 90%;
     }
 }

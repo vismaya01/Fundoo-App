@@ -33,11 +33,6 @@
 .container1 {
     display: flex;
     flex-direction: column;
-    height: 136px;
-}
-
-.note1 {
-    height: 90px;
 }
 
 .MuiInputBase-input {
@@ -47,7 +42,7 @@
 .pd {
     letter-spacing: .00625em;
     padding: 10px 15px 12px 15px;
-    height: 24px;
+    height: max-content;
 }
 
 .title {
@@ -64,13 +59,17 @@
     align-items: center;
     justify-content: flex-end;
     margin-right: 15px;
-    padding: 8px 24px;
+}
+
+@media screen and (max-width:900px) {
+    .contain {
+        width: 85%;
+    }
 }
 
 @media screen and (max-width: 700px) {
 
     .contain {
-        width: 99%;
         margin: 16px 30px 8px 30px;
     }
 

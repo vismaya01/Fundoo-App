@@ -6,7 +6,7 @@ const services = new Service()
 
 export default function Trash() {
     const [trashNote, setTrashNote] = useState([]);
-
+    
     const getTrashNote = () => {
         services.getTrashNoteList(localStorage.getItem("userToken"))
             .then((res) => {

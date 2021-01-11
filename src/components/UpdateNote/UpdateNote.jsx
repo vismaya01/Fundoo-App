@@ -40,10 +40,10 @@ const UpdateNote = (props) => {
             <div className="update container1" style={{ backgroundColor: Bgcolor }}>
                 <div className="note1" >
                     <div className="title pd">
-                        <InputBase type="text" placeholder='Title' fullWidth value={title} onChange={(e) => setTitle(e.target.value)} />
+                        <InputBase type="text" placeholder='Title' multiline fullWidth value={title} onChange={(e) => setTitle(e.target.value)} />
                     </div>
                     <div className='note pd'>
-                        <InputBase type="text" placeholder='Take a note...' fullWidth value={description}
+                        <InputBase type="text" multiline placeholder='Take a note...' fullWidth value={description}
                             onChange={(e) => setDescription(e.target.value)} />
                     </div>
                 </div>

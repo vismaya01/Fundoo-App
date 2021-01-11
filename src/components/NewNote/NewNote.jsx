@@ -41,6 +41,7 @@ const NewNote = (props) => {
                 props.GetNote()
                 setBgColor('#fff')
                 setTitle('')
+                setDescription('')
             }).catch((err) => {
                 console.log(err);
             });
@@ -59,13 +60,13 @@ const NewNote = (props) => {
             <div className="contain container1" style={{ backgroundColor: bgColor }}>
                 <div className="note1" >
                     <div className="title pd">
-                        <InputBase placeholder='Title' fullWidth onChange={(e) => setTitle(e.target.value)} />
+                        <InputBase placeholder='Title' fullWidth multiline onChange={(e) => setTitle(e.target.value)} />
                         <IconButton onClick={handlePin}>
                             <img src={pin ? FilledPin : OutlinedPin} alt='pin' />
                         </IconButton>
                     </div>
                     <div className='note pd'>
-                        <InputBase placeholder='Take a note...' fullWidth
+                        <InputBase placeholder='Take a note...' fullWidth multiline
                             onChange={(e) => setDescription(e.target.value)} />
                     </div>
                 </div>
