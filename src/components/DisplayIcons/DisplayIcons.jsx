@@ -17,6 +17,8 @@ const DisplayIcons = (props) => {
     const [color, setColor] = useState(false)
     const [showColorList, setShowColorList] = useState(false);
     const [anchorEl, setAnchorEl] = React.useState(null);
+    const [deleted] = useState(!props.item.isDeleted);
+    const [archive] = useState(!props.item.isArchived)
     let Bgcolor = props.color
 
     const handleClick = (event) => {
@@ -27,9 +29,9 @@ const DisplayIcons = (props) => {
         setAnchorEl(null);
     };
 
-    const handleTrashNotes = () => {
+    const handleTrashNotes = (value) => {
         let data = {
-            noteIdList: [props.item.id], isDeleted: true
+            noteIdList: [props.item.id], isDeleted: value
         }
         services.trashNotes(data, localStorage.getItem("userToken")).then(res => {
             console.log(res)
@@ -40,10 +42,23 @@ const DisplayIcons = (props) => {
         })
     }
 
-    const handleArchiveNotes = () => {
+    const handleDeleteNotes = () => {
+        let data = {
+            noteIdList: [props.item.id]
+        }
+        services.deleteNotes(data, localStorage.getItem("userToken")).then(res => {
+            console.log(res)
+            setAnchorEl(null);
+            props.GetNote();
+        }).catch(err => {
+            console.log(err);
+        })
+    }
+
+    const handleArchiveNotes = (value) => {
         if (props.id !== '') {
             let data = {
-                noteIdList: [props.item.id], isArchived: true,
+                noteIdList: [props.item.id], isArchived: value
             }
             services.archiveNotes(data, localStorage.getItem("userToken")).then(res => {
                 console.log(res)
@@ -57,7 +72,7 @@ const DisplayIcons = (props) => {
     const updateColor = () => {
         if (props.id !== '') {
             let data = {
-                noteIdList: [props.id], color : Bgcolor
+                noteIdList: [props.id], color: Bgcolor
             }
             services.updateColor(data, localStorage.getItem("userToken")).then(res => {
                 console.log(res)
@@ -85,7 +100,7 @@ const DisplayIcons = (props) => {
 
     const selectColor = (value) => {
         props.setBgColor(value);
-        Bgcolor=value;
+        Bgcolor = value;
     };
 
     const handleColor = () => {
@@ -122,8 +137,8 @@ const DisplayIcons = (props) => {
             <IconButton aria-label="Add image">
                 <ImageOutlinedIcon fontSize="small" />
             </IconButton>
-            <IconButton aria-label="Archive note"  >
-                <ArchiveOutlinedIcon fontSize="small" onClick={handleArchiveNotes} />
+            <IconButton aria-label="Archive note">
+                <ArchiveOutlinedIcon fontSize="small" onClick={() => { handleArchiveNotes(archive) }} />
             </IconButton>
             <IconButton aria-label="More" onClick={handleClick}>
                 <MoreVertOutlinedIcon fontSize="small" />
@@ -135,7 +150,14 @@ const DisplayIcons = (props) => {
                     keepMounted
                     open={Boolean(anchorEl)}
                     onClose={handleClose}>
-                    <MenuItem onClick={handleTrashNotes}>Delete Note</MenuItem>
+                    {props.trash ?
+                        <>
+                            <MenuItem onClick={() => { handleDeleteNotes() }}>Delete forever</MenuItem>
+                            <MenuItem onClick={() => { handleTrashNotes(deleted) }}>Restore Note</MenuItem>
+                        </>
+                        :
+                        <MenuItem onClick={() => { handleTrashNotes(deleted) }}>Delete Note</MenuItem>
+                    }
                 </Menu>
             }
         </div>

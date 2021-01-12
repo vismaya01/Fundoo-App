@@ -1,0 +1,9 @@
+.update {
+    width: 600px;
+}
+
+@media screen and (max-width:900px) {
+    .update {
+        width: 85%;
+    }
+}

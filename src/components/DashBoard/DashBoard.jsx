@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './DashBoard.css';
 import logo from '../assets/logo.png'
 import Drawer from '@material-ui/core/Drawer';
@@ -54,6 +54,7 @@ export default function DashBoard() {
   const [view, setView] = useState(false);
   const [keyValue, setKeyValue] = useState(false);
   const [hide, setHide] = useState(false)
+  const [search, setSearch] = useState('')
   let userData = JSON.parse(localStorage.getItem("userData"))
   let history = useHistory();
   let userEmail = ''
@@ -97,71 +98,76 @@ export default function DashBoard() {
     setHide(false)
   }
 
+  useEffect(() => {
+    handleClass('Notes')
+    history.push("/dashBoard/notes");
+  }, [])
+
   return (<div className='Content' >
-      <div className="header-content">
-        <div className="row-head1" onClick={handleUnHideAccount}>
-          <Toolbar>
-            <IconButton
-              onClick={open ? handleDrawerClose : handleDrawerOpen}
-              aria-label="open drawer"
-              edge="start">
-              <MenuIcon />
-            </IconButton>
-          </Toolbar>
-          <img className='logo' src={logo} alt='img' />
-          <div className="name">Fundoo</div>
-        </div>
-        <div className="row-head2" onClick={handleUnHideAccount}>
-          <div className="search" >
-            <IconButton>
-              <SearchIcon />
-            </IconButton>
-            <div className="input">
-              <InputBase placeholder="Search" fullWidth />
-            </div>
-            <IconButton className='clear-icon'>
-              <ClearIcon />
-            </IconButton>
-          </div>
-          <div className="row-icons">
-            <IconButton>
-              <Refresh />
-            </IconButton>
-            <IconButton className='App-icon' onClick={handleViewOpen} >
-              {view ? <AppIcon /> : <ListIcon />}
-            </IconButton>
-            <IconButton>
-              <SettingsIcon />
-            </IconButton>
-          </div>
-        </div>
-        <div className="row-head3">
+    <div className="header-content">
+      <div className="row-head1" onClick={handleUnHideAccount}>
+        <Toolbar>
+          <IconButton
+            onClick={open ? handleDrawerClose : handleDrawerOpen}
+            aria-label="open drawer"
+            edge="start">
+            <MenuIcon onClick={() => { handleClass('Notes') }} />
+          </IconButton>
+        </Toolbar>
+        <img className='logo' src={logo} alt='img' />
+        <div className="name">Fundoo</div>
+      </div>
+      <div className="row-head2" onClick={handleUnHideAccount}>
+        <div className="search" >
           <IconButton>
-            <AppIcon />
+            <SearchIcon />
           </IconButton>
-          <IconButton onClick={handleHideAccount}>
-            <AccountCircleIcon fontSize='large' />
+          <div className="input">
+            <InputBase placeholder="Search" fullWidth onChange={(e) => { setSearch(e.target.value) }} />
+          </div>
+          <IconButton className='clear-icon'>
+            <ClearIcon />
           </IconButton>
         </div>
-        <div className={hide ? "true profile" : "false profile"} >
-          <div className="person">
-            <div className="avatarContainer">
-              <Avatar className="avatarIcon" alt='profile' />
-            </div>
-            <div className='name' style={{ fontSize: 20 }}>
-              {userFirstName} {userLastName}
-            </div>
-            <div className='name' style={{ fontSize: 15 }}>
-              {userEmail}
-            </div>
-          </div>
-          <div className="cardActions">
-            <Button variant="contained" onClick={() => {
-              handleLogout()
-            }}>Logout</Button>
-          </div>
+        <div className="row-icons">
+          <IconButton>
+            <Refresh />
+          </IconButton>
+          <IconButton className='App-icon' onClick={handleViewOpen} >
+            {view ? <AppIcon /> : <ListIcon />}
+          </IconButton>
+          <IconButton>
+            <SettingsIcon />
+          </IconButton>
         </div>
       </div>
+      <div className="row-head3">
+        <IconButton>
+          <AppIcon />
+        </IconButton>
+        <IconButton onClick={handleHideAccount}>
+          <AccountCircleIcon fontSize='large' />
+        </IconButton>
+      </div>
+      <div className={hide ? "true profile" : "false profile"} >
+        <div className="person">
+          <div className="avatarContainer">
+            <Avatar className="avatarIcon" alt='profile' />
+          </div>
+          <div className='name' style={{ fontSize: 20 }}>
+            {userFirstName} {userLastName}
+          </div>
+          <div className='name' style={{ fontSize: 15 }}>
+            {userEmail}
+          </div>
+        </div>
+        <div className="cardActions">
+          <Button variant="contained" onClick={() => {
+            handleLogout()
+          }}>Logout</Button>
+        </div>
+      </div>
+    </div>
     <div className="main-content" onClick={handleUnHideAccount}>
       <Drawer variant="permanent"
         className={clsx({
@@ -175,7 +181,7 @@ export default function DashBoard() {
           }),
         }}>
         <List onMouseOver={handleDrawerOpen} onMouseOut={handleDrawerClose}>
-          <ListItem button component={Link} to="/dashBoard/notes"  onClick={() => { handleClass('Notes') }}
+          <ListItem button component={Link} to="/dashBoard/notes" onClick={() => { handleClass('Notes') }}
             className={keyValue === 'Notes' ? 'pink' : 'white'} key='Notes'>
             <ListItemIcon><EmojiObjectsOutlinedIcon /></ListItemIcon>
             <ListItemText>Notes</ListItemText>
@@ -204,11 +210,13 @@ export default function DashBoard() {
           </ListItem>
         </List>
       </Drawer>
-      <Switch>
-        <Route exact path="/dashBoard/notes" component={Note} />
-        <Route exact path="/dashBoard/trashes" component={Trash} />
-        <Route exact path="/dashBoard/archives" component={Archive} />
-      </Switch>
+      <div className="main">
+        <Switch>
+          <Route exact path="/dashBoard/notes" component={() => <Note search={search} />} />
+          <Route exact path="/dashBoard/trashes" component={Trash} />
+          <Route exact path="/dashBoard/archives" component={Archive} />
+        </Switch>
+      </div>
     </div>
   </div>
   );

@@ -5,13 +5,14 @@ import Service from '../../sevices/NoteServices';
 
 const services = new Service()
 
-export default function Note() {
+export default function Note(props) {
     const [noteList, setNoteList] = useState([]);
 
     const getNote = () => {
         services.getNoteList(localStorage.getItem("userToken"))
             .then((res) => {
-                setNoteList(res.data.data.data.filter(item => item.isDeleted === false && item.isArchived === false));
+                setNoteList(res.data.data.data.filter(item => item.isDeleted === false && item.isArchived === false 
+                    && (item.title.includes(props.search) || item.description.includes(props.search))).reverse());
             })
             .catch((err) => {
                 console.log(err);
@@ -23,9 +24,9 @@ export default function Note() {
     }, []);
 
     return (
-        <div className="main">
+        <>
             <NewNote GetNote={getNote} />
             <DisplayNote item={noteList} GetNote={getNote} />
-        </div>
+        </>
     )
 }

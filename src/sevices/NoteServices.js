@@ -29,6 +29,14 @@ export default class NoteService {
         });
     }
 
+    deleteNotes = (data, token) => {
+        return httpService.Post(`${this.baseUrl}/notes/deleteForeverNotes`, data, {
+            headers: {
+                Authorization: `${token}`,
+            }
+        });
+    }
+
     updateNotes = (data, token) => {
         return httpService.Post(`${this.baseUrl}/notes/updateNotes`, data, {
             headers: {

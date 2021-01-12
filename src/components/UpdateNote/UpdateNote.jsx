@@ -4,7 +4,7 @@ import InputBase from '@material-ui/core/InputBase';
 import Button from '@material-ui/core/Button';
 import DisplayIcons from '../DisplayIcons/DisplayIcons';
 import Service from '../../sevices/NoteServices'
-// import './UpdateNote'
+import './UpdateNote.css'
 
 const services = new Service()
 

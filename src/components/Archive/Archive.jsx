@@ -10,8 +10,7 @@ export default function Trash() {
     const getArchiveNote = () => {
         services.getArchiveNoteList(localStorage.getItem("userToken"))
             .then((res) => {
-                setArchiveNote(res.data.data.data)
-                console.log(archiveNote)
+                setArchiveNote(res.data.data.data.reverse())
             })
             .catch((err) => {
                 console.log(err)

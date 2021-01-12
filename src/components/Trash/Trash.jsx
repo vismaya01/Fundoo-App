@@ -6,12 +6,12 @@ const services = new Service()
 
 export default function Trash() {
     const [trashNote, setTrashNote] = useState([]);
+    let trash = true;
     
     const getTrashNote = () => {
         services.getTrashNoteList(localStorage.getItem("userToken"))
             .then((res) => {
-                setTrashNote(res.data.data.data)
-                console.log(trashNote)
+                setTrashNote(res.data.data.data.reverse())
             })
             .catch((err) => {
                 console.log(err)
@@ -23,8 +23,8 @@ export default function Trash() {
     }, []);
 
     return (
-        <div className="main">
-            <DisplayNote item={trashNote} GetNote={getTrashNote} />
-        </div>
+        <>
+            <DisplayNote item={trashNote} GetNote={getTrashNote} trash={trash} />
+        </>
     )
 }

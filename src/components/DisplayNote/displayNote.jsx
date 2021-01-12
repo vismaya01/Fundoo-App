@@ -32,7 +32,7 @@ const DisplayNote = (props) => {
                         </div>
                         <div className="tool">
                         <div className="toolbar1">
-                            <DisplayIcons setBgColor={setBgColor} item={item} id={item.id} GetNote={props.GetNote} noArchive={onArchive} />
+                            <DisplayIcons setBgColor={setBgColor} item={item} id={item.id} GetNote={props.GetNote} noArchive={onArchive} trash={props.trash} />
                         </div>
                         </div>
                     </div>
