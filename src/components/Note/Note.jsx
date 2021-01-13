@@ -20,7 +20,7 @@ export default function Note(props) {
     }
 
     useEffect(() => {
-        getNote()
+        getNote();
     }, []);
 
     return (

@@ -55,19 +55,10 @@ export default function DashBoard() {
   const [keyValue, setKeyValue] = useState(false);
   const [hide, setHide] = useState(false)
   const [search, setSearch] = useState('')
-  let userData = JSON.parse(localStorage.getItem("userData"))
   let history = useHistory();
-  let userEmail = ''
-  let userFirstName = ''
-  let userLastName = ''
-
-  if (userData !== null) {
-    userData.map((item) => (
-      (userEmail = item.email),
-      (userFirstName = item.firstName),
-      (userLastName = item.lastName)
-    ))
-  }
+  let userEmail = localStorage.getItem("email")
+  let userFirstName = localStorage.getItem("firstName")
+  let userLastName = localStorage.getItem("lastName")
 
   const handleLogout = () => {
     localStorage.clear();

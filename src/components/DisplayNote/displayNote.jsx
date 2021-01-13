@@ -4,10 +4,8 @@ import DisplayIcons from '../DisplayIcons/DisplayIcons'
 import UpdateNote from '../UpdateNote/UpdateNote';
 
 const DisplayNote = (props) => {
-    const [bgColor, setBgColor] = useState("#fff")
     const [note, setNote] = useState([])
     const [update, setUpdate] = useState(false)
-    const onArchive = true
 
     const handleUpdate = (value) => {
         setUpdate(true)
@@ -32,7 +30,7 @@ const DisplayNote = (props) => {
                         </div>
                         <div className="tool">
                         <div className="toolbar1">
-                            <DisplayIcons setBgColor={setBgColor} item={item} id={item.id} GetNote={props.GetNote} noArchive={onArchive} trash={props.trash} />
+                            <DisplayIcons item={item} id={item.id} GetNote={props.GetNote} archive={props.archive} trash={props.trash} />
                         </div>
                         </div>
                     </div>

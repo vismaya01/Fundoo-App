@@ -13,6 +13,7 @@ const UpdateNote = (props) => {
     const [title, setTitle] = useState();
     const [description, setDescription] = useState();
     const [Bgcolor, setColor] = useState();
+    console.log(Bgcolor)
 
     useEffect(() => {
         setTitle(props.item.title);

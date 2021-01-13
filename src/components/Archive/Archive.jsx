@@ -6,6 +6,7 @@ const services = new Service()
 
 export default function Trash() {
     const [archiveNote, setArchiveNote] = useState([]);
+    let archive = true;
 
     const getArchiveNote = () => {
         services.getArchiveNoteList(localStorage.getItem("userToken"))
@@ -22,8 +23,8 @@ export default function Trash() {
     }, []);
 
     return (
-        <div className="main">
-            <DisplayNote item={archiveNote} GetNote={getArchiveNote} />
-        </div>
+        <>
+            <DisplayNote item={archiveNote} GetNote={getArchiveNote} archive={archive} />
+        </>
     )
 }

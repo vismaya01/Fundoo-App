@@ -124,10 +124,10 @@ export default class login extends React.Component {
       this.emptyTextField();
       service.login(userData).then(res => {
         console.log(res);
-        let Data = []
-        Data[0] = res.data
         localStorage.setItem("userToken", res.data.id);
-        localStorage.setItem("userData", JSON.stringify(Data))
+        localStorage.setItem("firstName", res.data.firstName);
+        localStorage.setItem("lastName", res.data.lastName);
+        localStorage.setItem("email", res.data.email);
         this.setState({
           snackBarOpen: true, snackBarMsg: 'Login is successfull'
         });

@@ -165,6 +165,7 @@
 .avatarIcon{
     background-color: #f5a453 !important;
 }
+
 .avatarContainer{
     position: relative;
     height: 86px;
@@ -178,8 +179,9 @@
 .display-note {
     display: flex;
     flex-wrap:wrap;
-    justify-content: center;
-    margin: 20px;
+    justify-content: start;
+    margin-left: 30px;
+    margin-top: 20px;
 }
 
 @media screen and (max-width: 800px) {
