@@ -46,6 +46,9 @@ const NewNote = (props) => {
                 console.log(err);
             });
         }
+        else {
+            setBgColor('#fff')
+        }
         setOpen(true)
     };
 

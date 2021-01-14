@@ -180,6 +180,7 @@
     display: flex;
     flex-wrap:wrap;
     justify-content: start;
+    align-items: start;
     margin-left: 30px;
     margin-top: 20px;
 }
