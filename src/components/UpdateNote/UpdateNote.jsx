@@ -13,7 +13,6 @@ const UpdateNote = (props) => {
     const [title, setTitle] = useState();
     const [description, setDescription] = useState();
     const [Bgcolor, setColor] = useState();
-    console.log(Bgcolor)
 
     useEffect(() => {
         setTitle(props.item.title);
@@ -49,10 +48,12 @@ const UpdateNote = (props) => {
                     </div>
                 </div>
                 <div className="toolbar">
-                    <DisplayIcons GetNote={props.GetNote} setBgColor={setColor} color={Bgcolor} id={props.item.id} />
-                    <div className="close-button">
-                        <Button size="small" onClick={() => { updateNote() }}>Close</Button>
-                    </div>
+                    <DisplayIcons GetNote={props.GetNote} setBgColor={setColor} color={Bgcolor} id={props.item.id} trash={props.trash} />
+                    {props.trash ? null :
+                        <div className="close-button">
+                            <Button size="small" onClick={() => { updateNote() }}>Close</Button>
+                        </div>
+                    }
                 </div>
             </div>
         </Dialog>

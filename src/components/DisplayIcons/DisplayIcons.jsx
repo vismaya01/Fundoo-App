@@ -10,6 +10,7 @@ import MoreVertOutlinedIcon from '@material-ui/icons/MoreVertOutlined';
 import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
 import RestoreFromTrashOutlinedIcon from '@material-ui/icons/RestoreFromTrashOutlined';
 import IconButton from '@material-ui/core/IconButton';
+import Tooltip from '@material-ui/core/Tooltip'
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Service from '../../sevices/NoteServices'
@@ -113,25 +114,35 @@ const DisplayIcons = (props) => {
         <div className="tools">
             {props.trash ?
                 <>
-                    <IconButton aria-label="Delete forever" onClick={() => { handleDeleteNotes() }}>
-                        <DeleteForeverOutlinedIcon fontSize="small" />
-                    </IconButton>
-                    <IconButton aria-label="Restore" onClick={() => { handleTrashNotes(!props.item.isDeleted) }}>
-                        <RestoreFromTrashOutlinedIcon fontSize="small" />
-                    </IconButton>
+                    <Tooltip title="Delete forever">
+                        <IconButton aria-label="Delete forever" onClick={() => { handleDeleteNotes() }}>
+                            <DeleteForeverOutlinedIcon fontSize="small" />
+                        </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Restore">
+                        <IconButton aria-label="Restore" onClick={() => { handleTrashNotes(!props.item.isDeleted) }}>
+                            <RestoreFromTrashOutlinedIcon fontSize="small" />
+                        </IconButton>
+                    </Tooltip>
                 </>
                 :
                 <>
-                    <IconButton aria-label="Remind me" edge="start">
-                        <AddAlertOutlinedIcon fontSize="small" />
-                    </IconButton>
-                    <IconButton aria-label="Collaborator">
-                        <PersonAddOutlinedIcon fontSize="small" />
-                    </IconButton>
-                    <IconButton aria-label="Change color"
-                        onClick={handleClick1} >
-                        <ColorLensOutlinedIcon fontSize="small" />
-                    </IconButton>
+                    <Tooltip title="Remind me">
+                        <IconButton aria-label="Remind me" edge="start">
+                            <AddAlertOutlinedIcon fontSize="small" />
+                        </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Collaborator">
+                        <IconButton aria-label="Collaborator">
+                            <PersonAddOutlinedIcon fontSize="small" />
+                        </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Change color">
+                        <IconButton aria-label="Change color"
+                            onClick={handleClick1} >
+                            <ColorLensOutlinedIcon fontSize="small" />
+                        </IconButton>
+                    </Tooltip>
                     <Menu
                         id="simple-menu"
                         anchorEl={anchorE2}
@@ -146,15 +157,21 @@ const DisplayIcons = (props) => {
                             ))}
                         </div>
                     </Menu>
-                    <IconButton aria-label="Add image">
-                        <ImageOutlinedIcon fontSize="small" />
-                    </IconButton>
-                    <IconButton aria-label="Archive note" onClick={() => { handleArchiveNotes(!props.item.isArchived) }}>
-                        {props.archive ? <UnarchiveOutlinedIcon fontSize="small" /> : <ArchiveOutlinedIcon fontSize="small" />}
-                    </IconButton>
-                    <IconButton aria-label="More" onClick={handleClick}>
-                        <MoreVertOutlinedIcon fontSize="small" />
-                    </IconButton>
+                    <Tooltip title="Add image">
+                        <IconButton aria-label="Add image">
+                            <ImageOutlinedIcon fontSize="small" />
+                        </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Archive">
+                        <IconButton aria-label="Archive note" onClick={() => { handleArchiveNotes(!props.item.isArchived) }}>
+                            {props.archive ? <UnarchiveOutlinedIcon fontSize="small" /> : <ArchiveOutlinedIcon fontSize="small" />}
+                        </IconButton>
+                    </Tooltip>
+                    <Tooltip title="More">
+                        <IconButton aria-label="More" onClick={handleClick}>
+                            <MoreVertOutlinedIcon fontSize="small" />
+                        </IconButton>
+                    </Tooltip>
                     {props.noTrash ? null :
                         <Menu
                             id="simple-menu"
